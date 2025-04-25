@@ -45,6 +45,11 @@
 			path = HoppsTestSceneUITests;
 			sourceTree = "<group>";
 		};
+		6B19EE3E2DB30EF000DCDCED /* Sources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 		6B19EDEB2DB1F37B00DCDCED = {
 			isa = PBXGroup;
 			children = (
+				6B19EE3E2DB30EF000DCDCED /* Sources */,
 				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
 				6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */,
 				6B19EE0E2DB1F37C00DCDCED /* HoppsTestSceneUITests */,
@@ -109,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
+				6B19EE3E2DB30EF000DCDCED /* Sources */,
 			);
 			name = HoppsTestScene;
 			packageProductDependencies = (
@@ -395,6 +402,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FR6V5NG9X5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -422,6 +430,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FR6V5NG9X5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

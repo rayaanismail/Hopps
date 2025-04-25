@@ -8,8 +8,60 @@
 import Foundation
 import SpriteKit
 
-class GameScene: SKScene {
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    var systems = [GameSystem]()
+    // All systems within the array for access
+    var playerSystem: PlayerSystem?
+    var backgroundSystem: BackgroundSystem?
+    var cameraSystem: CameraSystem?
+    var platformSystem: PlatformSystem?
     
-}
+    
+    var touchSystems = [TouchControllable]()
+    private var lastTime: TimeInterval = 0
+    
+    override func didMove(to view: SKView) {
+        
+        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size, fadeStart: 5000, fadeEnd: 50000, particleSize: 3))
+        let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
+        let cSystem = CameraSystem()
+        let pSystem = PlatformSystem(PlatformConfig(platformBatch: 10, platformDistance: 150, platformWidth: 125))
+        platformSystem = pSystem
+        cameraSystem = cSystem
+        playerSystem = player
+        backgroundSystem = bg
+        systems = [cSystem, bg, player, pSystem]
+        systems.forEach {$0.setup(in: self)}
+        
+        // Any systems that are of the type touchcontrollable are added to this array
+        touchSystems = systems.compactMap { $0 as? TouchControllable }
+        physicsWorld.contactDelegate = self
+        physicsBody = SKPhysicsBody(edgeLoopFrom: camera!.frame)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        let deltaTime = currentTime - lastTime
+        systems.forEach {$0.update(deltaTime: deltaTime)}
+        lastTime = currentTime
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let pt = touches.first?.location(in: self) else { return }
+        touchSystems.forEach { $0.handleTouch(at: pt, type: .began) }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let pt = touches.first?.location(in: self) else { return }
+        touchSystems.forEach { $0.handleTouch(at: pt, type: .moved) }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let pt = touches.first?.location(in: self) else { return }
+        touchSystems.forEach { $0.handleTouch(at: pt, type: .ended) }
+    }
+    
+    }
+
 
 

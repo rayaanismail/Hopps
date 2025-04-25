@@ -60,11 +60,8 @@ class BackgroundScene: SKScene {
     }
 }
 
-extension SKColor {
-    static var skyBlue: SKColor {
-        return SKColor(red: 0.25, green: 0.7, blue: 1.0, alpha: 1.0)
-    }
-}
+
+
 class BackgroundHandler: SKNode {
     private let baseSky: SKSpriteNode
     private let gradientFade: SKSpriteNode

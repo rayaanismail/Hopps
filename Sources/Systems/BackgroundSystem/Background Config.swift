@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct BackgroundConfig {
+    let size: CGSize
+    let fadeStart: CGFloat
+    let fadeEnd: CGFloat
+    let particleSize: CGFloat
+}
