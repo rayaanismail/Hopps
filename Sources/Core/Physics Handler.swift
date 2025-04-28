@@ -10,7 +10,6 @@ import SpriteKit
 
 extension GameScene {
     func didBegin(_ contact: SKPhysicsContact) {
-        let jumpVelocity: CGFloat = 100
         
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -25,7 +24,7 @@ extension GameScene {
         
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.bounce {
-            firstBody.applyImpulse(CGVector(dx: 0, dy: jumpVelocity))
+            firstBody.applyImpulse(CGVector(dx: 0, dy: platformSystem?.jumpVelocity ?? 200))
             
             }
         }

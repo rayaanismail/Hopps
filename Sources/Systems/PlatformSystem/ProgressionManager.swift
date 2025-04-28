@@ -14,6 +14,15 @@ struct ProgressionStage {
     var jumpHeightMultiplier: CGFloat
     
     var platformDistribution: [(style: PlatformStyle, percentage: CGFloat)]
+    
+    var movingPlatformChance: CGFloat {
+        for dist in platformDistribution {
+            if dist.style == .moving {
+                return dist.percentage
+            }
+        }
+        return 0
+    }
 }
 struct ProgressionManager {
     // MARK: STAGE ARRAY
@@ -21,7 +30,8 @@ struct ProgressionManager {
     
     /// Initial Stage 0-25k
     /// Normal Distribution and Modifiers
-    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1, platformDistribution: [(style: .stationary, percentage: 1)])
+    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 2, jumpHeightMultiplier: 3, platformDistribution: [(style: .moving, percentage: 1)])
+//    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1, platformDistribution: [(style: .stationary, percentage: 1)])
     
     /// Second Stage 25k-50k (30% Moving Platforms)
     /// Normal Distribution and Modifiers
@@ -38,6 +48,13 @@ struct ProgressionManager {
     init() {
         self.stages = [stageOne, stageTwo, stageThree, stageFour]
     }
-    
-    
+    /// Returns the proper progression stage based on altitude given to it.
+    func getCurrentStage(_ altitude: CGFloat) -> ProgressionStage {
+        for stage in stages {
+            if stage.range.contains(altitude) {
+                return stage
+            }
+        }
+        return stages[0]
+    }
 }

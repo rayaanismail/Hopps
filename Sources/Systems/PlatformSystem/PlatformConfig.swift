@@ -14,4 +14,5 @@ struct PlatformConfig {
     var platformBatch = 10
     var platformDistance: CGFloat = 250
     var platformWidth: CGFloat = 250
+    var platformBounceVelocity: CGFloat = 150
 }
