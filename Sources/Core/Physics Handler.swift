@@ -24,7 +24,7 @@ extension GameScene {
         
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.bounce {
-            firstBody.applyImpulse(CGVector(dx: 0, dy: platformSystem?.jumpVelocity ?? 200))
+            firstBody.applyImpulse(CGVector(dx: 0, dy: platformSystem?.jumpVelocity ?? 100))
             
             }
         }

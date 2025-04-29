@@ -26,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size, fadeStart: 5000, fadeEnd: 50000, particleSize: 3))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cSystem = CameraSystem()
-        let pSystem = PlatformSystem(PlatformConfig(platformBatch: 10, platformDistance: 150, platformWidth: 125))
+        let pSystem = PlatformSystem(PlatformConfig())
         platformSystem = pSystem
         cameraSystem = cSystem
         playerSystem = player
@@ -37,7 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Any systems that are of the type touchcontrollable are added to this array
         touchSystems = systems.compactMap { $0 as? TouchControllable }
         physicsWorld.contactDelegate = self
-        physicsBody = SKPhysicsBody(edgeLoopFrom: camera!.frame)
+        /// Offset the scenes physics body by half of the view (anchor point is 0, so this doesnt affect anything except for the collision at 0,0)
+        physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBodyEdgeLoop())
     }
     
     override func update(_ currentTime: TimeInterval) {

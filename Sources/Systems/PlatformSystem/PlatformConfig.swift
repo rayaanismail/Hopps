@@ -11,8 +11,14 @@ enum PlatformStyle {
 }
 
 struct PlatformConfig {
-    var platformBatch = 10
-    var platformDistance: CGFloat = 250
-    var platformWidth: CGFloat = 250
-    var platformBounceVelocity: CGFloat = 150
+    var platformBatch = 20
+    var platformDistance: CGFloat = 150
+    var platformScale: CGFloat = 0.4
+    var jumpVelocity: CGFloat = 100
+    var marginPercentage: CGFloat = 0.7
+    var platformOffset: CGFloat = 50
+    var platformSpawnOffset: CGFloat = 900
+    
+    // Integrate into progression
+    var platformMoveSpeed: Double = 2
 }

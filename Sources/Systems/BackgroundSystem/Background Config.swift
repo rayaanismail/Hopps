@@ -12,4 +12,6 @@ struct BackgroundConfig {
     let fadeStart: CGFloat
     let fadeEnd: CGFloat
     let particleSize: CGFloat
+    /// Affects the scroll speed of the static background compared to the Camera Position.
+    let scrollSpeed: CGFloat = 0.05
 }

@@ -27,7 +27,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     
     // Movement
     var targetX: CGFloat?
-    var moveSpeed: CGFloat = 16
+    var moveSpeed: CGFloat = 20
     var maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(15))
     var tiltSmoothing: CGFloat = 0.125 // easing factor
     var previousDx: CGFloat = 0 // Remember velocity to smooth tilt more
@@ -36,8 +36,8 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     // Simply configures variables
     init(config: PlayerConfig) {
         character = SKSpriteNode(imageNamed: "HStanding")
-        character.position = CGPoint(x: config.size.width / 3, y: -config.size.height / 3.5)
-        character.scale(to: CGSize(width: 60, height: 60))
+        character.position = CGPoint(x: 0, y: -config.size.height / 2)
+        character.setScale(0.25)
         lastPosition = character.position
         super.init()
         character = playerPhysics(&character)
@@ -52,15 +52,22 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         
         movePlayer(deltaTime: deltaTime)
         lastPosition = character.position
-        clampSpeed(1200)
-//        print(character.physicsBody!.velocity)
+        // If the character has reached the platforms, start limiting the speed
+        if character.position.y > getPlatformThreshold() {
+            clampSpeed(1350)
+        }
+        
     }
     
     // Called in scenes didMove(to: ) NO GAME LOGIC
     func setup(in scene: SKScene) {
         scene.addChild(self)
         addChild(character)
-        character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))
+        Task {
+            try await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+            character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 600))
+        }
+        
     }
     
     // Called in scenes touch handlers.
@@ -81,9 +88,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         character.physicsBody = SKPhysicsBody(rectangleOf: character.size)
         character.physicsBody?.isDynamic = true
         character.physicsBody?.allowsRotation = false
-        character.physicsBody?.restitution = 0
-        character.physicsBody?.friction = 1
-        character.physicsBody?.linearDamping = 0.3
+        character.physicsBody?.friction = 0.2
         character.physicsBody?.affectedByGravity = true
         character.physicsBody?.categoryBitMask = PhysicsCategory.character
         character.physicsBody?.collisionBitMask = PhysicsCategory.bounce
