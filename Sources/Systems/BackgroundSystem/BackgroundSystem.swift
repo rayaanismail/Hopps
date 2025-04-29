@@ -15,23 +15,23 @@ import SpriteKit
 
 extension SKColor {
     static var skyBlue: SKColor {
-        return SKColor(red: 0.25, green: 0.7, blue: 1.0, alpha: 1.0)
+        return SKColor(red: 87/255, green: 200/255, blue: 255/255, alpha: 1.0)
     }
 }
 
 class BackgroundSystem: SKNode, GameSystem {
     // Properties
-    
     private let config: BackgroundConfig
     private let baseSky: SKSpriteNode
-    private let gradientFade: SKSpriteNode
+    let gradientFade: SKSpriteNode
+    private let landBackground: SKSpriteNode
     
-    private let spaceOverlay: SKSpriteNode
-    private let fadeStart: CGFloat
-    private let fadeEnd: CGFloat
+    let spaceOverlay: SKSpriteNode
+    let fadeStart: CGFloat
+    let fadeEnd: CGFloat
     
-    private let altitudeLabel: SKLabelNode
-    private let stars: SKEmitterNode
+    let altitudeLabel: SKLabelNode
+    let stars: SKEmitterNode
     var topY: CGFloat {
         spaceOverlay.position.y * 2
     }
@@ -43,13 +43,13 @@ class BackgroundSystem: SKNode, GameSystem {
         
         // Initializes base sky & space background
         // Solid Blue Base Background
-        baseSky = SKSpriteNode(imageNamed: "PixelSky")
+        baseSky = SKSpriteNode(color: .skyBlue, size: config.size)
         baseSky.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         baseSky.zPosition = -100 /// A lesser z position is more 'out' of the screen, so blue would be in the background
         baseSky.setScale(1.25)
         
         // Simulated white to transparent fade overlay
-        gradientFade = SKSpriteNode(color: .white, size: config.size)
+        gradientFade = SKSpriteNode(color: .clear, size: config.size)
         gradientFade.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         gradientFade.alpha = 0.4
         gradientFade.blendMode = .alpha
@@ -69,6 +69,14 @@ class BackgroundSystem: SKNode, GameSystem {
         altitudeLabel.zPosition = -70
         altitudeLabel.fontColor = .white
         altitudeLabel.blendMode = .add
+        
+        // Land Background Initialization
+        landBackground = SKSpriteNode(imageNamed: "LandBackground")
+        landBackground.anchorPoint = CGPoint(x: 1, y: 0.18)
+        landBackground.zPosition = -60
+        let backgroundScale = config.size.width / (landBackground.size.width - 3)
+        landBackground.setScale(backgroundScale)
+        landBackground.position = CGPoint(x: config.size.width / 2, y: config.size.height / 2)
         
         // Star particle Emitter
         stars = SKEmitterNode(fileNamed: "Stars.sks")!
@@ -100,6 +108,7 @@ class BackgroundSystem: SKNode, GameSystem {
     func setup(in scene: SKScene) {
         scene.addChild(self) // Adds itself to the gamescene
         addChild(baseSky)
+        addChild(landBackground)
         addChild(gradientFade)
         addChild(spaceOverlay)
         addChild(altitudeLabel)
@@ -113,40 +122,14 @@ class BackgroundSystem: SKNode, GameSystem {
     // Pure per frame logic. No node creation here
     func update(deltaTime: TimeInterval) {
         elevationTransition()
-        self.position = (scene as? GameScene)?.cameraSystem?.cameraNode.position ?? CGPoint.zero
+        scrollBackground()
+        followCamera()
+    }
+    func scrollBackground() {
+        landBackground.position.y = -(getCameraPosition().y * config.scrollSpeed)
     }
     
-    func elevationTransition() {
-        let altitude: CGFloat = (scene as? GameScene)?.cameraSystem?.cameraNode.position.y ?? 0
-        let maxOpacity: CGFloat = 0.85
-        // Fade to space based on altitude
-        
-        // Normalize altitude into a range [0, 1] for blending
-        var t: CGFloat
-        if altitude <= fadeStart {
-            t = 0.0
-        } else if altitude >= fadeEnd {
-            t = maxOpacity
-        } else {
-            t = (altitude - fadeStart) / (fadeEnd - fadeStart)
-            t = clamp(value: t, min: 0, max: maxOpacity)
-        }
-        
-        // --- Layer Adjustments ---
-        // Fade in the black "space" overlay gradually
-        spaceOverlay.alpha = t
-        
-        // Fade out the soft white gradient as we rise into space
-        let maxGradientAlpha: CGFloat = 0.9
-        gradientFade.alpha = (1.0 - t) * maxGradientAlpha
-        
-        spaceOverlay.alpha = t
-        stars.alpha = t
-        
-        // Optional: reduce gradient as space takes over
-        gradientFade.alpha = (1 - t) * 0.5 // Lower this to make sky bluer sooner
-        
-        altitudeLabel.text = "\(altitude)"
-        
+    func followCamera() {
+        self.position = (scene as? GameScene)?.cameraSystem?.cameraNode.position ?? CGPoint.zero
     }
 }
