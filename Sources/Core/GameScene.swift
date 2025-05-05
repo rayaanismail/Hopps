@@ -23,7 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size, fadeStart: 5000, fadeEnd: 50000, particleSize: 3))
+        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cSystem = CameraSystem()
         let pSystem = PlatformSystem(PlatformConfig())

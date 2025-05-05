@@ -24,7 +24,10 @@ class BackgroundSystem: SKNode, GameSystem {
     private let config: BackgroundConfig
     private let baseSky: SKSpriteNode
     let gradientFade: SKSpriteNode
-    private let landBackground: SKSpriteNode
+    private let layer1: SKSpriteNode
+    private let layer2: SKSpriteNode
+    private let layer3: SKSpriteNode
+    private var layers: [SKSpriteNode] = []
     
     let spaceOverlay: SKSpriteNode
     let fadeStart: CGFloat
@@ -70,13 +73,29 @@ class BackgroundSystem: SKNode, GameSystem {
         altitudeLabel.fontColor = .white
         altitudeLabel.blendMode = .add
         
-        // Land Background Initialization
-        landBackground = SKSpriteNode(imageNamed: "LandBackground")
-        landBackground.anchorPoint = CGPoint(x: 1, y: 0.18)
-        landBackground.zPosition = -60
-        let backgroundScale = config.size.width / (landBackground.size.width - 3)
-        landBackground.setScale(backgroundScale)
-        landBackground.position = CGPoint(x: config.size.width / 2, y: config.size.height / 2)
+        // Background Parallax Layer Initialization
+        layer1 = SKSpriteNode(imageNamed: "Layer1")
+        let backgroundScale = config.size.width / (layer1.size.width - 3)
+        layer1.anchorPoint = CGPoint(x: 1, y: 0.5)
+        layer1.zPosition = -60
+        layer1.setScale(backgroundScale)
+        layer1.position = CGPoint(x: config.size.width / 2, y: config.size.height / 2)
+        layers.append(layer1)
+        
+        layer2 = SKSpriteNode(imageNamed: "Layer2")
+        layer2.anchorPoint = CGPoint(x: 1, y: 0.6)
+        layer2.zPosition = -59
+        layer2.setScale(backgroundScale)
+        layer2.position = CGPoint(x: config.size.width / 2, y: config.size.height / 2)
+        layers.append(layer2)
+        
+        layer3 = SKSpriteNode(imageNamed: "Layer3")
+        layer3.anchorPoint = CGPoint(x: 1, y: 0.6)
+        layer3.zPosition = -55
+        layer3.setScale(backgroundScale)
+        layer3.position = CGPoint(x: config.size.width / 2, y: config.size.height / 2)
+        layers.append(layer3)
+        
         
         // Star particle Emitter
         stars = SKEmitterNode(fileNamed: "Stars.sks")!
@@ -108,7 +127,7 @@ class BackgroundSystem: SKNode, GameSystem {
     func setup(in scene: SKScene) {
         scene.addChild(self) // Adds itself to the gamescene
         addChild(baseSky)
-        addChild(landBackground)
+        layers.forEach {addChild($0)}
         addChild(gradientFade)
         addChild(spaceOverlay)
         addChild(altitudeLabel)
@@ -125,8 +144,12 @@ class BackgroundSystem: SKNode, GameSystem {
         scrollBackground()
         followCamera()
     }
+    
+    /// Scrolls the parallax layers according to their scrollspeed
     func scrollBackground() {
-        landBackground.position.y = -(getCameraPosition().y * config.scrollSpeed)
+        layers.indices.forEach { i in
+            layers[i].position.y = -(getCameraPosition().y * config.scrollSpeeds[i])
+        }
     }
     
     func followCamera() {

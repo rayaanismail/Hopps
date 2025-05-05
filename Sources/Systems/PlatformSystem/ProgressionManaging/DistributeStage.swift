@@ -15,8 +15,10 @@ extension PlatformSystem {
         
         if altitude > progressionManager.currentStageUpperBound {
             progressionManager.setCurrentStage(altitude)
-            jumpVelocity = progressionManager.currentStage.jumpHeightMultiplier * config.jumpVelocity
-            platformDistance = progressionManager.currentStage.distanceMultiplier * config.platformDistance
+            let stage = progressionManager.currentStage
+            jumpFactor = stage.jumpHeightMultiplier
+            
+            platformDistance = stage.distanceMultiplier * config.platformDistance
         } else {
             return
         }

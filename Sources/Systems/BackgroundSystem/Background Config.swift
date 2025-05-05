@@ -9,9 +9,13 @@ import Foundation
 
 struct BackgroundConfig {
     let size: CGSize
-    let fadeStart: CGFloat
-    let fadeEnd: CGFloat
-    let particleSize: CGFloat
+    let fadeStart: CGFloat = 50000
+    let fadeEnd: CGFloat = 100000
+    let particleSize: CGFloat = 3
     /// Affects the scroll speed of the static background compared to the Camera Position.
-    let scrollSpeed: CGFloat = 0.05
+    let scrollSpeeds: [CGFloat] = [
+        0.017, // Layer 1
+        0.025, // Layer 2
+        0.075 // Layer 3
+    ]
 }
