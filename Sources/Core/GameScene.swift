@@ -22,12 +22,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemySystem:      EnemySystem?
 
     override func didMove(to view: SKView) {
-        // 1. Initialize systems in proper order
-        let bg     = BackgroundSystem(config: BackgroundConfig(
-                        size: view.frame.size,
-                        fadeStart: 5000,
-                        fadeEnd:   50000,
-                        particleSize: 3))
+        
+        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
         let plat   = PlatformSystem(PlatformConfig())

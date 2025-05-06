@@ -24,8 +24,8 @@ class PlatformSystem: SKNode, GameSystem {
     var width: CGFloat = 0
     var margin: (lower: CGFloat, upper: CGFloat) = (0, 0)
     
-    
-    var jumpVelocity: CGFloat
+    /// The factor of which the jump velocity is derived, it is calculated by the platform distance multiplied by a factor. The character by default will jump f * platform distance.
+    var jumpFactor: CGFloat
     var platformDistance: CGFloat
     var platformCounter: CGFloat = 0
     
@@ -35,9 +35,10 @@ class PlatformSystem: SKNode, GameSystem {
         progressionManager = ProgressionManager()
         progressionManager.setCurrentStage(0) /// Sets the current stage and upper bound
         
-        /// Initialize jump velocity and distance multipliers
-        jumpVelocity = progressionManager.currentStage.jumpHeightMultiplier * config.jumpVelocity
+        // Initialize jump velocity and distance multipliers
         platformDistance = progressionManager.currentStage.distanceMultiplier * config.platformDistance
+        jumpFactor = (progressionManager.currentStage.jumpHeightMultiplier)
+        
         super.init()
     }
     

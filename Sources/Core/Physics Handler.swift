@@ -9,6 +9,9 @@ import Foundation
 import SpriteKit
 
 extension GameScene {
+    func getJumpVelocity() -> CGFloat {
+        platformSystem?.fetchJumpVelocity() ?? 0
+    }
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -24,7 +27,10 @@ extension GameScene {
         // bounce logic
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.bounce {
-            firstBody.applyImpulse(CGVector(dx: 0, dy: platformSystem?.jumpVelocity ?? 100))
+            firstBody.velocity = CGVectorMake(0, 0)
+            firstBody.applyImpulse(CGVector(dx: 0, dy: getJumpVelocity()))
+            
+            }
         }
 
         // enemy collision: restart game
