@@ -13,10 +13,9 @@ extension GameScene {
         platformSystem?.fetchJumpVelocity() ?? 0
     }
     func didBegin(_ contact: SKPhysicsContact) {
-        
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
-        
+
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
@@ -24,7 +23,8 @@ extension GameScene {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
-        
+
+        // bounce logic
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.bounce {
             firstBody.velocity = CGVectorMake(0, 0)
@@ -32,4 +32,12 @@ extension GameScene {
             
             }
         }
+
+        // enemy collision: restart game
+        if firstBody.categoryBitMask == PhysicsCategory.character
+            && secondBody.categoryBitMask == PhysicsCategory.enemy {
+            restart()
+        }
+    }
 }
+

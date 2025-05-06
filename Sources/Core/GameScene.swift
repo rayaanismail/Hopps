@@ -8,44 +8,52 @@
 import Foundation
 import SpriteKit
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    var systems = [GameSystem]()
-    // All systems within the array for access
-    var playerSystem: PlayerSystem?
-    var backgroundSystem: BackgroundSystem?
-    var cameraSystem: CameraSystem?
-    var platformSystem: PlatformSystem?
-    
-    
-    var touchSystems = [TouchControllable]()
+    // Shared game systems
+    var systems       = [GameSystem]()
+    var touchSystems  = [TouchControllable]()
     private var lastTime: TimeInterval = 0
-    
+
+    // These must NOT be private so everyone can access them:
+    var backgroundSystem: BackgroundSystem?
+    var playerSystem:     PlayerSystem?
+    var cameraSystem:     CameraSystem?
+    var platformSystem:   PlatformSystem?
+    var enemySystem:      EnemySystem?
+
     override func didMove(to view: SKView) {
         
         let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
-        let cSystem = CameraSystem()
-        let pSystem = PlatformSystem(PlatformConfig())
-        platformSystem = pSystem
-        cameraSystem = cSystem
-        playerSystem = player
+        let cam    = CameraSystem()
+        let plat   = PlatformSystem(PlatformConfig())
+        let enemy  = EnemySystem(playerSystem: player, config: EnemySystemConfig(chaseSpeed: 300))
+
+        // 2. Assign to your properties (all now internal)
         backgroundSystem = bg
-        systems = [cSystem, bg, player, pSystem]
-        systems.forEach {$0.setup(in: self)}
-        
-        // Any systems that are of the type touchcontrollable are added to this array
+        playerSystem     = player
+        cameraSystem     = cam
+        platformSystem   = plat
+        enemySystem      = enemy
+
+        // 3. Build the shared array and set them up
+        systems = [cam, bg, player, plat, enemy]
+        systems.forEach { $0.setup(in: self) }
+
+        // 4. Touch‐controllable subslice
         touchSystems = systems.compactMap { $0 as? TouchControllable }
+
+        // 5. Physics
         physicsWorld.contactDelegate = self
-        /// Offset the scenes physics body by half of the view (anchor point is 0, so this doesnt affect anything except for the collision at 0,0)
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBodyEdgeLoop())
     }
-    
+
     override func update(_ currentTime: TimeInterval) {
         let deltaTime = currentTime - lastTime
-        systems.forEach {$0.update(deltaTime: deltaTime)}
+        systems.forEach { $0.update(deltaTime: deltaTime) }
         lastTime = currentTime
     }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let pt = touches.first?.location(in: self) else { return }
