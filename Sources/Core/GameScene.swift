@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
         let plat   = PlatformSystem(PlatformConfig())
-        let enemy  = EnemySystem(playerSystem: player, config: EnemySystemConfig(chaseSpeed: 200))
+        let enemy  = EnemySystem(playerSystem: player, config: EnemySystemConfig(chaseSpeed: 300))
 
         // 2. Assign to your properties (all now internal)
         backgroundSystem = bg

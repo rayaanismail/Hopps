@@ -54,6 +54,7 @@ class EnemySystem: SKNode, GameSystem {
         guard let scene = sceneRef else { return }
         // 1) Spawn new enemies if it's time
         print("enemyCount = \(enemies.count)")
+    
         
         enemies.forEach {print($0.position)}
         timeSinceLastSpawn += deltaTime
@@ -86,11 +87,12 @@ class EnemySystem: SKNode, GameSystem {
         let rightX = camPos.x + 50 
         let spawnX = Bool.random() ? leftX : rightX
         enemy.position = CGPoint(x: spawnX, y: spawnY)
-        print(("Enemy Spawn Position\(spawnX), \(spawnY)"))
+       // print(("Enemy Spawn Position\(spawnX), \(spawnY)"))
+        print(enemy.position)
 
         // Physics setup
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
-        enemy.physicsBody?.isDynamic = false
+        enemy.physicsBody?.isDynamic = false 
         enemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy   // defined in PhysicsCategory
         enemy.physicsBody?.contactTestBitMask = PhysicsCategory.character
 
@@ -107,11 +109,9 @@ class EnemySystem: SKNode, GameSystem {
         for enemy in enemies {
             let dx = character.position.x - enemy.position.x
             let dy = character.position.y - enemy.position.y
-            let dist = hypot(dx, dy)
-            guard dist < 1 else { continue }
             // Normalize and scale by chase speed
-            let vx = dx / dist * speed
-            let vy = dy / dist * speed
+            let vx = dx
+            let vy = dy
             enemy.position.x += vx * dt
             enemy.position.y += vy * dt
         }

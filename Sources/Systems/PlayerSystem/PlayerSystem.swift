@@ -52,7 +52,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         
         movePlayer(deltaTime: deltaTime)
         lastPosition = character.position
-     print(character.position)
+     //print(character.position)
         // If the character has reached the platforms, start limiting the speed
         if character.position.y > getPlatformThreshold() {
             clampSpeed(1350)
