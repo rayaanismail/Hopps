@@ -21,6 +21,7 @@ class CameraSystem: SKNode, GameSystem {
     
     func update(deltaTime: TimeInterval) {
         cameraLogic()
+       // print(cameraNode.position)
     }
     
     func setup(in scene: SKScene) {
