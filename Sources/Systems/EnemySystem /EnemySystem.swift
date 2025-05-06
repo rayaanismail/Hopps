@@ -105,7 +105,7 @@ class EnemySystem: SKNode, GameSystem {
     private func steerEnemies(dt: CGFloat) {
         // change to call player system
         let character = getScene().fetchCharacter()// Player's sprite
-        let speed = config.chaseSpeed
+      //  let speed = config.chaseSpeed
         for enemy in enemies {
             let dx = character.position.x - enemy.position.x
             let dy = character.position.y - enemy.position.y
