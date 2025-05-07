@@ -67,7 +67,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
             try await Task.sleep(nanoseconds: 1 * 1_000_000_000)
             character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 600))
         }
-        
+//        character.run(SKAction.repeatForever(AnimationManager.cageJump))
     }
     
     // Called in scenes touch handlers.
