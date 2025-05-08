@@ -6,3 +6,26 @@
 //
 
 import Foundation
+import SpriteKit
+
+extension PlatformSystem {
+    func getScene() -> GameScene {
+        return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
+    }
+    
+    func getAltitude() -> CGFloat {
+        (scene as? GameScene)?.fetchAltitude() ?? 0
+    }
+    
+    func getCamera() -> SKCameraNode {
+        getScene().fetchCamera()
+    }
+    
+    func getCharacter() -> SKNode {
+        getScene().fetchCharacter()
+    }
+    
+    func getView() -> SKView {
+        (scene as? GameScene)?.fetchView() ?? SKView(frame: CGRect.zero)
+    }
+}

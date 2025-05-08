@@ -51,17 +51,16 @@ class EnemySystem: SKNode, GameSystem {
     // MARK: - Update Loop
     /// Called each frame from GameScene.update(_:) to drive spawning, steering, cleanup
     public func update(deltaTime: TimeInterval) {
-        guard let scene = sceneRef else { return }
         // 1) Spawn new enemies if it's time
-        print("enemyCount = \(enemies.count)")
+//        print("enemyCount = \(enemies.count)")
     
         
-        enemies.forEach {print($0.position)}
+//        enemies.forEach {print($0.position)}
         timeSinceLastSpawn += deltaTime
         if timeSinceLastSpawn >= config.spawnInterval,
            enemies.count < config.maxEnemiesOnScreen {
             timeSinceLastSpawn = 0
-            spawnEnemy(in: scene)
+//            spawnEnemy(in: scene)
         }
         // 2) Steer existing enemies toward player character
         steerEnemies(dt: CGFloat(deltaTime))
@@ -88,7 +87,7 @@ class EnemySystem: SKNode, GameSystem {
         let spawnX = Bool.random() ? leftX : rightX
         enemy.position = CGPoint(x: spawnX, y: spawnY)
        // print(("Enemy Spawn Position\(spawnX), \(spawnY)"))
-        print(enemy.position)
+//        print(enemy.position)
 
         // Physics setup
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemySize)

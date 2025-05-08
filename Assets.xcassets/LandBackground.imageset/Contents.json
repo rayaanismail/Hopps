@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "CageBreak.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "LandBackground.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
