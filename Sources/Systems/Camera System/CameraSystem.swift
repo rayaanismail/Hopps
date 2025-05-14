@@ -43,6 +43,7 @@ class CameraSystem: SKNode, GameSystem {
             if characterY > cameraY {
                 maxCameraY = cameraY
                 camera.position.y = characterY
+             //   print(camera.position)
             }
             /// If the characters height is less than the bottom of the camera view, then restart the scene
             if characterY < (cameraY - view.halfHeight() - 50) {

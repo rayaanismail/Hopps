@@ -13,7 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var systems       = [GameSystem]()
     var touchSystems  = [TouchControllable]()
     private var lastTime: TimeInterval = 0
-
+    
     // These must NOT be private so everyone can access them:
     var backgroundSystem: BackgroundSystem?
     var playerSystem:     PlayerSystem?
@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
         let plat   = PlatformSystem(PlatformConfig())
-        let enemy  = EnemySystem(playerSystem: player, config: EnemySystemConfig(chaseSpeed: 300))
+        let enemy = EnemySystem()
 
         // 2. Assign to your properties (all now internal)
         backgroundSystem = bg
@@ -37,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemySystem      = enemy
 
         // 3. Build the shared array and set them up
-        systems = [cam, bg, player, plat, enemy]
+        systems = [enemy, cam, bg, player, plat]
         systems.forEach { $0.setup(in: self) }
 
         // 4. Touch‐controllable subslice

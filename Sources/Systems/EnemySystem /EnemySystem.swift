@@ -3,127 +3,196 @@
 //  HoppsTestScene
 //
 //  Created by Analu Jahi on 5/2/25.
-//
 
+
+import Foundation
 import SpriteKit
 
-/// Configuration for EnemySystem
-public struct EnemySystemConfig {
-    public var maxEnemiesOnScreen: Int = 1      // Maximum simultaneous enemies
-    public var spawnInterval: TimeInterval = 3.0   // Seconds between spawns
-    public var chaseSpeed: CGFloat = 300.0         // Points per second
-
-    /// Public initializer to allow default argument usage
-    public init(maxEnemiesOnScreen: Int = 1,
-                spawnInterval: TimeInterval = 3.0,
-                chaseSpeed: CGFloat = 200.0) {
-        self.maxEnemiesOnScreen = maxEnemiesOnScreen
-        self.spawnInterval = spawnInterval
-        self.chaseSpeed = chaseSpeed
-    }
-}
-
-/// A system responsible for spawning, steering, and cleaning up enemies
+/// Manages one “smart” tracker plus many periodic zig-zag enemies
 class EnemySystem: SKNode, GameSystem {
-    // MARK: - Properties
-    private weak var sceneRef: SKScene?
-    private weak var playerSystem: PlayerSystem?   // Used to fetch the player's character
-    private var enemies: [SKSpriteNode] = []        // Active enemies
-    private var timeSinceLastSpawn: TimeInterval = 0
-    private let config: EnemySystemConfig
-    private let enemySize = CGSize(width: 5, height: 5)
+    // MARK: — Properties
 
-    // MARK: - Init
-    init(playerSystem: PlayerSystem, config: EnemySystemConfig = EnemySystemConfig()) {
-        self.playerSystem = playerSystem
-        self.config = config
-        super.init()
-    }
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    /// Tracks previous horizontal delta for tilt
+     var previousDx: CGFloat = 0
+    /// Maximum tilt angle in radians
+    let maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(90))
+    /// Smoothing factor for tilt interpolation
+    let tiltSmoothing: CGFloat = 0.125
+    
+    /// Cap for simultaneous zig-zag enemies
+     let maxZigzagEnemies = 3
 
-    // MARK: - Setup
-    /// Adds this system into the scene; called from GameScene.didMove(to:)
-    public func setup(in scene: SKScene) {
-        sceneRef = scene
+    /// The single tracking bird (nil until spawned)
+     var tracker: SKSpriteNode?
+
+    /// All currently live zig-zag birds
+     var zigzags: [SKSpriteNode] = []
+
+    /// Accumulates time to know when to emit next zig-zag
+    var zigzagTimer: TimeInterval = 0
+
+    /// How often (seconds) to spawn a new zig-zag
+    let zigzagInterval: TimeInterval = 3.0
+
+    /// Chase speed for the tracker
+     let chaseSpeed: CGFloat = 250
+
+    /// Zig-zag travel distance
+     let zigzagDistance: CGFloat = 100
+
+    /// Physics/body size for all birds
+   let enemySize = CGSize(width: 5, height: 5)
+
+
+    // MARK: — Setup
+
+    /// Call from GameScene.didMove(to:)
+    func setup(in scene: SKScene) {
         scene.addChild(self)
     }
 
-    // MARK: - Update Loop
-    /// Called each frame from GameScene.update(_:) to drive spawning, steering, cleanup
-    public func update(deltaTime: TimeInterval) {
-        guard let scene = sceneRef else { return }
-        // 1) Spawn new enemies if it's time
-        print("enemyCount = \(enemies.count)")
-    
+    // MARK: — GameSystem
+
+    func update(deltaTime: TimeInterval) {
+        let dt = CGFloat(deltaTime)
+
+        guard let gs = self.scene as? GameScene,
+              let view = gs.view
+        else { return }
+
+        // ─── 1) Spawn & steer the single tracker ────────────────────
+        if tracker == nil {
+            spawnTracker(in: gs, view: view)
+        } else {
+            steer(tracker!, toward: gs.fetchCharacter() as! SKSpriteNode, dt: dt)
+        }
+
+        // ─── 2) Periodically spawn zig-zag enemies ─────────────────
+        zigzagTimer += deltaTime
+        if zigzagTimer >= zigzagInterval {
+            zigzagTimer = 0
+            if zigzags.count < maxZigzagEnemies {
+                spawnZigzag(in: gs)
+            }
+        }
+
+        // ─── 3) Clean up any zig-zags that fell below the bottom ─────
+        let bottomY = gs.anchorPosition(0.5, 0.0).y - enemySize.height
+        for (i, z) in zigzags.enumerated().reversed() {
+            if z.position.y < bottomY {
+                z.removeFromParent()
+                zigzags.remove(at: i)
+            }
+        }
+    }
+
+    // MARK: — Spawning
+
+     func spawnTracker(in gs: GameScene, view: SKView) {
+        let e = SKSpriteNode(imageNamed: "BirdEnemy")
+        e.setScale(0.2)
+        e.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
+        e.physicsBody?.isDynamic = false
+        e.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
+        e.physicsBody?.contactTestBitMask = PhysicsCategory.character
+
+        // bottom-left or bottom-right just off-screen
+        let cam = gs.fetchCameraPosition()
+        let halfW = view.frame.width  / 2
+        let halfH = view.frame.height / 2
+        let left  = CGPoint(x: cam.x - halfW, y: cam.y - halfH)
+        let right = CGPoint(x: cam.x + halfW, y: cam.y - halfH)
+
+        let spawnX = Bool.random()
+          ? left.x  - enemySize.width/2
+          : right.x + enemySize.width/2
+        // optional vertical offset if desired
+        let spawnY = left.y - enemySize.height/2 - 300
+
+        e.position = CGPoint(x: spawnX, y: spawnY)
+        addChild(e)
+        tracker = e
+
+        print("🎯 Tracker spawned at \(e.position), camera at \(cam)")
+    }
+
+     func spawnZigzag(in gs: GameScene) {
+           let z = SKSpriteNode(imageNamed: "BirdEnemy")
+           z.setScale(0.2)
+           z.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
+           z.physicsBody?.isDynamic = false
+           z.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
+           z.physicsBody?.contactTestBitMask = PhysicsCategory.character
+
+           // spawn just above camera’s top edge
+           let topY   = gs.anchorPosition(0.5, 1.0).y
+           let minX   = gs.anchorPosition(0.0, 0.0).x + enemySize.width/2
+           let maxX   = gs.anchorPosition(1.0, 0.0).x - enemySize.width/2
+           let spawnX = CGFloat.random(in: minX...maxX)
+           let spawnY = topY + enemySize.height/2
+
+           z.position = CGPoint(x: spawnX, y: spawnY)
+           addChild(z)
+           zigzags.append(z)
+
+           // give it its classic zig-zag motion
+           let dur = Double.random(in: 1.5...3.0)
+           let action: SKAction
+           if Bool.random() {
+               // horizontal zigzag: flip at each turn
+               let faceRight = SKAction.run { z.xScale = abs(z.xScale) }
+               let faceLeft  = SKAction.run { z.xScale = -abs(z.xScale) }
+               action = .sequence([
+                   faceRight,
+                   .moveBy(x: zigzagDistance, y: 0, duration: dur),
+                   faceLeft,
+                   .moveBy(x: -zigzagDistance, y: 0, duration: dur)
+               ])
+           } else {
+               // vertical zigzag: keep last horizontal facing
+               let moveDown = SKAction.moveBy(x: 0, y: -zigzagDistance, duration: dur)
+               let moveUp   = SKAction.moveBy(x: 0, y: zigzagDistance,  duration: dur)
+               action = .sequence([moveDown, moveUp])
+           }
+           z.run(.repeatForever(action))
+
+           print("🎉 Zigzag spawned at \(z.position)")
+       }
+
+    // MARK: — Steering
+
+    private func steer(_ e: SKSpriteNode, toward character: SKSpriteNode, dt: CGFloat) {
+        let dx   = character.position.x - e.position.x
+        let dy   = character.position.y - e.position.y
+        let dist = hypot(dx, dy)
+        guard dist > 0 else { return }
+
+        // clamp so we never overshoot
+        let maxStep = chaseSpeed * dt
+        let step    = min(dist, maxStep)
+        let vx      = dx / dist * step
+        let vy      = dy / dist * step
+
+        e.position.x += vx
+        e.position.y += vy
+
+        let scale = abs(e.xScale)
+               e.xScale = vx >= 0 ? -scale : scale
         
-        enemies.forEach {print($0.position)}
-        timeSinceLastSpawn += deltaTime
-        if timeSinceLastSpawn >= config.spawnInterval,
-           enemies.count < config.maxEnemiesOnScreen {
-            timeSinceLastSpawn = 0
-            spawnEnemy(in: scene)
-        }
-        // 2) Steer existing enemies toward player character
-        steerEnemies(dt: CGFloat(deltaTime))
-        // 3) Remove offscreen enemies
+        // ===== Tilt logic =====
+        previousDx = vx
+        let targetRotation = clamp(value: -previousDx * 0.15, min: -maxTilt, max: maxTilt)
+        let currentRotation = e.zRotation
+        let newRotation     = lerp(from: currentRotation, to: targetRotation, amount: tiltSmoothing)
+        e.zRotation = newRotation
     }
 
-    // MARK: - Spawning
-    private func spawnEnemy(in scene: SKScene) {
-        // Spawn logic does not require playerSystem reference
-        let enemy = SKSpriteNode(imageNamed: "birdEnemy")
-        enemy.setScale(0.2)
+    // MARK: — Helpers
 
-        //  Determine camera-based spawn area
-        // Ensure there'shave a GameScene to fetch camera position
-        let gameScene = getScene()
-        let camPos = gameScene.fetchCharacter().position
-//        let halfW = scene.size.width  / 2
-//        let halfH = scene.size.height / 2
-
-        // Compute spawn coordinates based on camera view
-        let spawnY = camPos.y + 50
-        let leftX  = camPos.x - 50
-        let rightX = camPos.x + 50 
-        let spawnX = Bool.random() ? leftX : rightX
-        enemy.position = CGPoint(x: spawnX, y: spawnY)
-       // print(("Enemy Spawn Position\(spawnX), \(spawnY)"))
-        print(enemy.position)
-
-        // Physics setup
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
-        enemy.physicsBody?.isDynamic = false 
-        enemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy   // defined in PhysicsCategory
-        enemy.physicsBody?.contactTestBitMask = PhysicsCategory.character
-
-        // Add to scene and track
-        addChild(enemy)
-        enemies.append(enemy)
+     func clamp(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+        return value < min ? min : (value > max ? max : value)
     }
-
-    // MARK: - Steering
-    private func steerEnemies(dt: CGFloat) {
-        // change to call player system
-        let character = getScene().fetchCharacter()// Player's sprite
-      //  let speed = config.chaseSpeed
-        for enemy in enemies {
-            let dx = character.position.x - enemy.position.x
-            let dy = character.position.y - enemy.position.y
-            // Normalize and scale by chase speed
-            let vx = dx
-            let vy = dy
-            enemy.position.x += vx * dt
-            enemy.position.y += vy * dt
-        }
+     func lerp(from: CGFloat, to: CGFloat, amount: CGFloat) -> CGFloat {
+        return from + (to - from) * amount
     }
-
-    // MARK: - Cleanup
-//    private func cleanupEnemies(in scene: SKScene) {
-//        for (index, enemy) in enemies.enumerated().reversed() {
-//            if enemy.position.y < scene.frame.minY - enemySize.height {
-//                enemy.removeFromParent()
-//                enemies.remove(at: index)
-//            }
-//        }
-//    }
 }
