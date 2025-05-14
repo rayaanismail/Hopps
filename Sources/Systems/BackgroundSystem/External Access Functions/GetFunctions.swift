@@ -9,12 +9,18 @@ import Foundation
 import SpriteKit
 
 extension BackgroundSystem {
+    /// Fetches the event system GameScene, call fetch functions to access data.
+    func getScene() -> GameScene {
+        return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
+    }
+    
     func getAltitude() -> CGFloat {
-        (scene as? GameScene)?.fetchAltitude() ?? 0
+        getScene().fetchAltitude()
     }
     
     func getCameraPosition() -> CGPoint {
-        (scene as? GameScene)?.fetchCameraPosition() ?? CGPoint.zero
+        getScene().fetchCameraPosition()
     }
-
+    
+    
 }

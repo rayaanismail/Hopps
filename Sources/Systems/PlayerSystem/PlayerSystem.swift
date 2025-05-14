@@ -13,6 +13,7 @@ struct PlayerConfig {
 }
 
 class PlayerSystem: SKNode, GameSystem, TouchControllable {
+    var canMove: Bool = true
     var altitude: CGFloat {
         get {
             return clamp(value: character.position.y, min: 0, max: CGFloat.greatestFiniteMagnitude)
@@ -36,7 +37,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     // Simply configures variables
     init(config: PlayerConfig) {
         character = SKSpriteNode(imageNamed: "HStanding")
-        character.position = CGPoint(x: 0, y: -config.size.height / 2)
+        character.position = CGPoint(x: 0, y: -config.size.height / 2.5)
         character.setScale(0.25)
         lastPosition = character.position
         super.init()
@@ -64,11 +65,6 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     func setup(in scene: SKScene) {
         scene.addChild(self)
         addChild(character)
-        Task {
-            try await Task.sleep(nanoseconds: 1 * 1_000_000_000)
-            character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 600))
-        }
-//        character.run(SKAction.repeatForever(AnimationManager.cageJump))
     }
     
     // Called in scenes touch handlers.

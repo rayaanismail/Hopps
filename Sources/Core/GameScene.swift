@@ -12,7 +12,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Shared game systems
     var systems       = [GameSystem]()
     var touchSystems  = [TouchControllable]()
-    private var lastTime: TimeInterval = 0
+    var sceneStartTime: TimeInterval?
+    var gameTime = GameTime()
 
     // These must NOT be private so everyone can access them:
     var backgroundSystem: BackgroundSystem?
@@ -20,14 +21,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var cameraSystem:     CameraSystem?
     var platformSystem:   PlatformSystem?
     var enemySystem:      EnemySystem?
+    var eventSystem:      EventSystem?
 
     override func didMove(to view: SKView) {
-        
-        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size))
+        let bg = BackgroundSystem(config: BackgroundConfig(view: view))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
         let plat   = PlatformSystem(PlatformConfig())
         let enemy  = EnemySystem(playerSystem: player, config: EnemySystemConfig(chaseSpeed: 300))
+        let event  = EventSystem(config: EventConfig())
 
         // 2. Assign to your properties (all now internal)
         backgroundSystem = bg
@@ -35,9 +37,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cameraSystem     = cam
         platformSystem   = plat
         enemySystem      = enemy
-
+        eventSystem      = event
+        
         // 3. Build the shared array and set them up
-        systems = [cam, bg, player, plat, enemy]
+        systems = [cam, bg, player, plat, enemy, event]
         systems.forEach { $0.setup(in: self) }
 
         // 4. Touch‐controllable subslice
@@ -49,9 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        let deltaTime = currentTime - lastTime
-        systems.forEach { $0.update(deltaTime: deltaTime) }
-        lastTime = currentTime
+        gameTime.update(currentTime: currentTime)
+        systems.forEach { $0.update(deltaTime: gameTime.deltaTime) }
+        
     }
 
     
@@ -69,8 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let pt = touches.first?.location(in: self) else { return }
         touchSystems.forEach { $0.handleTouch(at: pt, type: .ended) }
     }
-    
-    }
+}
 
 
 
