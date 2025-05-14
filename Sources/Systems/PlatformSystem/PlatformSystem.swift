@@ -11,7 +11,7 @@ import SpriteKit
 
 /// Handles the spawning, arranging, and managing of the platforms within the gamescene
 class PlatformSystem: SKNode, GameSystem {
-    private var floorPlatform: SKSpriteNode
+    var floorPlatform: SKSpriteNode
     var progressionManager: ProgressionManager
     var config: PlatformConfig
     
@@ -60,11 +60,12 @@ class PlatformSystem: SKNode, GameSystem {
     }
     
     func setupGroundPlatform(_ scene: SKScene) {
-        let view = getView()
-        floorPlatform = SKSpriteNode(color: .brown, size: CGSize(width: view.frame.width, height: view.frame.height * 0.4))
+        floorPlatform = SKSpriteNode(imageNamed: "FloorPlatform")
         /// Positioned in the middle of the screen, slightly below the zero
-        floorPlatform.position = getScene().anchorPosition(0.5, -0.08)
-        floorPlatform.physicsBody = SKPhysicsBody(rectangleOf: floorPlatform.size)
+        floorPlatform.position = getScene().anchorPosition(0.5, 0.05)
+        floorPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: floorPlatform.size.width, height: floorPlatform.size.height * 0.3))
+        floorPlatform.setScale(0.5)
+        floorPlatform.zPosition = -10
         floorPlatform.physicsBody?.isDynamic = false
     }
     

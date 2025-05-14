@@ -37,7 +37,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     // Simply configures variables
     init(config: PlayerConfig) {
         character = SKSpriteNode(imageNamed: "HStanding")
-        character.position = CGPoint(x: 0, y: -config.size.height / 3.15)
+        character.position = CGPoint(x: 0, y: -config.size.height / 2.5)
         character.setScale(0.25)
         lastPosition = character.position
         super.init()

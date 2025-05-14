@@ -1,14 +1,37 @@
 //
-//  FetchSceneData.swift
+//  FetchData.swift
 //  HoppsTestScene
 //
-//  Created by Rayaan Ismail on 4/28/25.
+//  Created by Rayaan Ismail on 5/13/25.
 //
 
 import Foundation
 import SpriteKit
 
 extension GameScene {
+    // Camera Data
+    func fetchCameraPosition() -> CGPoint {
+        camera?.position ?? CGPoint.zero
+    }
+    
+    func fetchCamera() -> SKCameraNode {
+        return camera ?? SKCameraNode()
+    }
+    
+    // Platform Data
+    func fetchThresholdY() -> CGFloat{
+        platformSystem?.spawnThresholdY ?? 0
+    }
+    
+    // Player Data
+    func fetchCharacter() -> SKNode {
+        return playerSystem?.character ?? SKSpriteNode(color: .purple, size: CGSize(width: 50, height: 75))
+    }
+    func fetchAltitude() -> CGFloat {
+        return playerSystem?.altitude ?? 0
+    }
+    
+    // Scene Data
     func fetchView() -> SKView {
         return self.view ?? SKView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
@@ -25,4 +48,5 @@ extension GameScene {
             y: yOffsetZero + (view.frame.height * yFactor)
         )
     }
+    
 }

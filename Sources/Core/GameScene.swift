@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var eventSystem:      EventSystem?
 
     override func didMove(to view: SKView) {
-        let bg = BackgroundSystem(config: BackgroundConfig(size: view.frame.size))
+        let bg = BackgroundSystem(config: BackgroundConfig(view: view))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
         let plat   = PlatformSystem(PlatformConfig())
@@ -38,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         platformSystem   = plat
         enemySystem      = enemy
         eventSystem      = event
-
+        
         // 3. Build the shared array and set them up
         systems = [cam, bg, player, plat, enemy, event]
         systems.forEach { $0.setup(in: self) }
@@ -54,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         gameTime.update(currentTime: currentTime)
         systems.forEach { $0.update(deltaTime: gameTime.deltaTime) }
+        
     }
 
     

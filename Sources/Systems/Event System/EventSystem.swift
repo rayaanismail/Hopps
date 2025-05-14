@@ -32,11 +32,11 @@ class EventSystem: SKNode, GameSystem {
     }
     
     init(config: EventConfig) {
-        cage = SKSpriteNode(texture: AnimationManager.cageTexture)
+        cage = SKSpriteNode(texture: AnimationManager.launchTexture)
         cage.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         cage.zPosition = 10
         cage.alpha = 0
-        cage.setScale(2)
+        cage.setScale(1.3)
         super.init()
     }
     

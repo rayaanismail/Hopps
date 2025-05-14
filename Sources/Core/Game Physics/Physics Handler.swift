@@ -12,6 +12,7 @@ extension GameScene {
     func getJumpVelocity() -> CGFloat {
         platformSystem?.fetchJumpVelocity() ?? 0
     }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody

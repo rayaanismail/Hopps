@@ -60,11 +60,11 @@ struct ProgressionManager {
     
     /// Third Stage 50k-75k (50% Moving Platforms)
     /// 25% Distribution Increase, 20% Jump Height Increase
-    let stageThree = ProgressionStage(range: 50000..<75000, distanceMultiplier: 2, jumpHeightMultiplier: 3, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
+    let stageThree = ProgressionStage(range: 50000..<75000, distanceMultiplier: 2, jumpHeightMultiplier: 2.4, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
     
     /// Fourth Stage 75k+ (50% Moving Platforms)
     /// 50% Distribution Increase, 40% Jump Height Increase
-    let stageFour = ProgressionStage(range: 75000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 2.5, jumpHeightMultiplier: 3.5, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
+    let stageFour = ProgressionStage(range: 75000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 2.8, jumpHeightMultiplier: 3.5, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
     
     init() {
         self.stages = [stageOne, stageTwo, stageThree, stageFour]

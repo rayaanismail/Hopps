@@ -10,18 +10,17 @@ import SpriteKit
 
 final class AnimationManager {
     /// Cage Break Animation, derived from a Spritesheet
-    static let cageJump: SKAction = {
+    static let launchAnimation: SKAction = {
         // Create an array of SKTextures from texture atlas / spritesheet
-        let sheet = SpriteSheet(texture: SKTexture(imageNamed: "CageAnimation"), rows: 1, columns: 4)
-        var frames = [SKTexture]()
-        for column in 0..<4 {
-            if let texture = sheet.textureForColumn(column: column, row: 0) {
-                frames.append(texture)
-            }
-        }
+        var frames = getSpritesheet(imageNamed: "CannonAnimation", rows: 1, columns: 9, spacing: 0, margin: 0)
         // return animation created from the texture array, with a configurable time per frame
-        let animation = SKAction.animate(with: frames, timePerFrame: 0.13)
+        let animation = SKAction.animate(with: frames, timePerFrame: 0.09)
         return animation
+    }()
+    
+    static let launchEffectAnimation: SKAction = {
+        var frames = getSpritesheet(imageNamed: "CannonSmokeAnimation", rows: 1, columns: 4)
+        return SKAction.animate(with: frames, timePerFrame: 0.18)
     }()
     
     static let jumpAnimation: SKAction = {
@@ -32,8 +31,8 @@ final class AnimationManager {
     }()
     
     /// The initial texture for the cage break animation spritesheet
-    static let cageTexture: SKTexture = {
-        let sheet = SpriteSheet(texture: SKTexture(imageNamed: "CageAnimation"), rows: 1, columns: 4)
+    static let launchTexture: SKTexture = {
+        let sheet = SpriteSheet(texture: SKTexture(imageNamed: "CannonAnimation"), rows: 1, columns: 9)
         return sheet.textureForColumn(column: 0, row: 0)!
     }()
     
@@ -41,8 +40,8 @@ final class AnimationManager {
 }
 
 /// Returns a SKTexture Array for spritesheets
-func getSpritesheet(imageNamed: String, rows: Int, columns: Int) -> [SKTexture] {
-    let sheet = SpriteSheet(texture: SKTexture(imageNamed: imageNamed), rows: rows, columns: columns)
+func getSpritesheet(imageNamed: String, rows: Int, columns: Int, spacing: CGFloat = 0, margin: CGFloat = 0) -> [SKTexture] {
+    let sheet = SpriteSheet(texture: SKTexture(imageNamed: imageNamed), rows: rows, columns: columns, spacing: spacing, margin: margin)
     var frames = [SKTexture]()
     for column in 0..<columns {
         if let texture = sheet.textureForColumn(column: column, row: 0) {

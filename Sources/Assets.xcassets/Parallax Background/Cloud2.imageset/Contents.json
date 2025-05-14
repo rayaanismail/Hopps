@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "CageOpenAnimation.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Cloud2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
