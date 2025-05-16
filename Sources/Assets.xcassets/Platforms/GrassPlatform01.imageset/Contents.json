@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "Hopps.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "GrassPlatform01.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

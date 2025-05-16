@@ -184,6 +184,10 @@ class BackgroundSystem: SKNode, GameSystem {
             cloud.position.y = -(getCameraPosition().y  * config.cloudYSpeeds[idx]) + config.cloudPositions[idx].y
         }
         cloudStageLayer.position.y = layer1.position.y + 450
+        
+        if getAltitude() > config.fadeStart {
+            cloudStageLayer.position.y -= 500
+        }
     }
     
     func followCamera() {

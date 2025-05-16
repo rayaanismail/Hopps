@@ -18,12 +18,13 @@ class EventSystem: SKNode, GameSystem {
     var timeData: GameTime {
         getScene().gameTime
     }
+    
+    var didIt = true
     var cage: SKSpriteNode
     
     func update(deltaTime: TimeInterval) {
-        if timeData.elapsedTime == 0 {
-            startGame()
-        }
+//        startGame()
+//        debugTeleport(y: 25000, yForce: 0)
     }
     
     func setup(in scene: SKScene) {

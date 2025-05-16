@@ -13,8 +13,8 @@ struct BackgroundConfig {
         view.frame.size
     }
     let view: SKView
-    let fadeStart: CGFloat = 110000
-    let fadeEnd: CGFloat = 130000
+    let fadeStart: CGFloat = 101000
+    let fadeEnd: CGFloat = 105000
     let particleSize: CGFloat = 3
     let progressionManager = ProgressionManager()
     let cloudLayerLowerBound: CGFloat = 1200
