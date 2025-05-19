@@ -21,7 +21,7 @@ class EnemySystem: SKNode, GameSystem {
     let tiltSmoothing: CGFloat = 0.125
 
     /// Cap for simultaneous zig-zag enemies
-    let maxZigzagEnemies = 3
+    let maxZigzagEnemies = 5
 
     /// The single tracking bird (nil until spawned)
     var tracker: SKSpriteNode?
@@ -36,7 +36,7 @@ class EnemySystem: SKNode, GameSystem {
     let zigzagInterval: TimeInterval = 3.0
 
     /// Chase speed for the tracker
-    let chaseSpeed: CGFloat = 300
+    let chaseSpeed: CGFloat = 500
 
     /// Zig-zag travel distance
     let zigzagDistance: CGFloat = 100
