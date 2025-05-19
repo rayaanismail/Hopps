@@ -18,7 +18,6 @@ extension GameScene {
         let view = fetchView()
         let cameraPos = fetchCameraPosition()
         let xOffsetZero = cameraPos.x - view.halfWidth()
-     //   let xPositiveZero = cameraPos.x + view.halfWidth()
         let yOffsetZero = cameraPos.y - view.halfHeight()
         
         return CGPoint(
