@@ -8,6 +8,7 @@
 import SwiftUI
 import SpriteKit
 
+
 struct ContentView: View {
     var scene: SKScene {
         let scene = GameScene()
@@ -25,3 +26,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+

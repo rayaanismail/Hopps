@@ -13,20 +13,22 @@ class EnemySystem: SKNode, GameSystem {
     // MARK: — Properties
 
     /// Tracks previous horizontal delta for tilt
-     var previousDx: CGFloat = 0
+    var previousDx: CGFloat = 0
+    
     /// Maximum tilt angle in radians
     let maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(90))
+    
     /// Smoothing factor for tilt interpolation
     let tiltSmoothing: CGFloat = 0.125
-    
+
     /// Cap for simultaneous zig-zag enemies
-     let maxZigzagEnemies = 3
+    let maxZigzagEnemies = 3
 
     /// The single tracking bird (nil until spawned)
-     var tracker: SKSpriteNode?
+    var tracker: SKSpriteNode?
 
     /// All currently live zig-zag birds
-     var zigzags: [SKSpriteNode] = []
+    var zigzags: [SKSpriteNode] = []
 
     /// Accumulates time to know when to emit next zig-zag
     var zigzagTimer: TimeInterval = 0
@@ -35,14 +37,13 @@ class EnemySystem: SKNode, GameSystem {
     let zigzagInterval: TimeInterval = 3.0
 
     /// Chase speed for the tracker
-     let chaseSpeed: CGFloat = 250
+    let chaseSpeed: CGFloat = 300
 
     /// Zig-zag travel distance
-     let zigzagDistance: CGFloat = 100
+    let zigzagDistance: CGFloat = 100
 
     /// Physics/body size for all birds
-   let enemySize = CGSize(width: 5, height: 5)
-
+    let enemySize = CGSize(width: 5, height: 5)
 
     // MARK: — Setup
 
@@ -88,9 +89,9 @@ class EnemySystem: SKNode, GameSystem {
 
     // MARK: — Spawning
 
-     func spawnTracker(in gs: GameScene, view: SKView) {
-        let e = SKSpriteNode(imageNamed: "BirdEnemy")
-        e.setScale(0.2)
+    func spawnTracker(in gs: GameScene, view: SKView) {
+        let e = SKSpriteNode(imageNamed: "EBirdEnemy")
+        e.setScale(1.4)
         e.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
         e.physicsBody?.isDynamic = false
         e.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
@@ -104,95 +105,113 @@ class EnemySystem: SKNode, GameSystem {
         let right = CGPoint(x: cam.x + halfW, y: cam.y - halfH)
 
         let spawnX = Bool.random()
-          ? left.x  - enemySize.width/2
-          : right.x + enemySize.width/2
+            ? left.x  - enemySize.width/2
+            : right.x + enemySize.width/2
         // optional vertical offset if desired
-        let spawnY = left.y - enemySize.height/2 - 300
+        let spawnY = left.y - enemySize.height/2 - 600
 
         e.position = CGPoint(x: spawnX, y: spawnY)
+     //   e.zRotation = -.pi / 2
         addChild(e)
         tracker = e
 
         print("🎯 Tracker spawned at \(e.position), camera at \(cam)")
     }
 
-     func spawnZigzag(in gs: GameScene) {
-           let z = SKSpriteNode(imageNamed: "BirdEnemy")
-           z.setScale(0.2)
-           z.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
-           z.physicsBody?.isDynamic = false
-           z.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
-           z.physicsBody?.contactTestBitMask = PhysicsCategory.character
+    func spawnZigzag(in gs: GameScene) {
+        let z = SKSpriteNode(imageNamed: "RBirdEnemy")
+        z.setScale(0.2)
+        z.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
+        z.physicsBody?.isDynamic = false
+        z.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
+        z.physicsBody?.contactTestBitMask = PhysicsCategory.character
 
-           // spawn just above camera’s top edge
-           let topY   = gs.anchorPosition(0.5, 1.0).y
-           let minX   = gs.anchorPosition(0.0, 0.0).x + enemySize.width/2
-           let maxX   = gs.anchorPosition(1.0, 0.0).x - enemySize.width/2
-           let spawnX = CGFloat.random(in: minX...maxX)
-           let spawnY = topY + enemySize.height/2
+        // ─── horizontal range ───────────────────────────────────────
+        let minX   = gs.anchorPosition(0.0, 0.0).x + enemySize.width/2
+        let maxX   = gs.anchorPosition(1.0, 0.0).x - enemySize.width/2
+        let spawnX = CGFloat.random(in: minX...maxX)
 
-           z.position = CGPoint(x: spawnX, y: spawnY)
-           addChild(z)
-           zigzags.append(z)
+        // ─── vertical spawn just off-screen above the top edge ──────
+        let cam      = gs.fetchCameraPosition()
+        let halfH    = gs.view!.frame.height / 2
+        let topEdgeY = cam.y + halfH
+        // add 20 points of padding so it starts fully out of view
+        let spawnY   = topEdgeY + enemySize.height/2 + 1700
 
-           // give it its classic zig-zag motion
-           let dur = Double.random(in: 1.5...3.0)
-           let action: SKAction
-           if Bool.random() {
-               // horizontal zigzag: flip at each turn
-               let faceRight = SKAction.run { z.xScale = abs(z.xScale) }
-               let faceLeft  = SKAction.run { z.xScale = -abs(z.xScale) }
-               action = .sequence([
-                   faceRight,
-                   .moveBy(x: zigzagDistance, y: 0, duration: dur),
-                   faceLeft,
-                   .moveBy(x: -zigzagDistance, y: 0, duration: dur)
-               ])
-           } else {
-               // vertical zigzag: keep last horizontal facing
-               let moveDown = SKAction.moveBy(x: 0, y: -zigzagDistance, duration: dur)
-               let moveUp   = SKAction.moveBy(x: 0, y: zigzagDistance,  duration: dur)
-               action = .sequence([moveDown, moveUp])
-           }
-           z.run(.repeatForever(action))
+        z.position = CGPoint(x: spawnX, y: spawnY)
+        addChild(z)
+        zigzags.append(z)
 
-           print("🎉 Zigzag spawned at \(z.position)")
-       }
+        // ─── constrain to horizontal bounds ─────────────────────────
+        let xRange = SKRange(lowerLimit: minX, upperLimit: maxX)
+        z.constraints = [ SKConstraint.positionX(xRange) ]
+
+        // ─── give it its classic zig-zag motion ────────────────────
+        let dur = Double.random(in: 1.5...3.0)
+        let action: SKAction
+        if Bool.random() {
+            // horizontal zigzag: flip at each turn
+            let faceRight = SKAction.run { z.xScale = abs(z.xScale) }
+            let faceLeft  = SKAction.run { z.xScale = -abs(z.xScale) }
+            action = .sequence([
+                faceRight,
+                .moveBy(x: -zigzagDistance, y: 0, duration: dur),
+                faceLeft,
+                .moveBy(x: zigzagDistance, y: 0, duration: dur)
+            ])
+        } else {
+            // vertical zigzag: keep last horizontal facing
+            let moveDown = SKAction.moveBy(x: 0, y: -zigzagDistance, duration: dur)
+            let moveUp   = SKAction.moveBy(x: 0, y: zigzagDistance,  duration: dur)
+            action = .sequence([moveDown, moveUp])
+        }
+        z.run(.repeatForever(action))
+
+        print("🎉 Zigzag spawned at \(z.position)")
+    }
 
     // MARK: — Steering
 
-    private func steer(_ e: SKSpriteNode, toward character: SKSpriteNode, dt: CGFloat) {
+    func steer(_ e: SKSpriteNode, toward character: SKSpriteNode, dt: CGFloat) {
+        // 1) move as you already do…
         let dx   = character.position.x - e.position.x
         let dy   = character.position.y - e.position.y
         let dist = hypot(dx, dy)
         guard dist > 0 else { return }
-
-        // clamp so we never overshoot
         let maxStep = chaseSpeed * dt
         let step    = min(dist, maxStep)
-        let vx      = dx / dist * step
-        let vy      = dy / dist * step
+        e.position.x += dx / dist * step
+        e.position.y += dy / dist * step
 
-        e.position.x += vx
-        e.position.y += vy
+        // 2) compute the angle to the player…
+        let rawAngle = atan2(dy, dx)
 
-        let scale = abs(e.xScale)
-               e.xScale = vx >= 0 ? -scale : scale
-        
-        // ===== Tilt logic =====
-        previousDx = vx
-        let targetRotation = clamp(value: -previousDx * 0.15, min: -maxTilt, max: maxTilt)
-        let currentRotation = e.zRotation
-        let newRotation     = lerp(from: currentRotation, to: targetRotation, amount: tiltSmoothing)
-        e.zRotation = newRotation
+        // 3) if your art faces right by default, you can just do:
+        e.zRotation = rawAngle + .pi
+
+        //    ——— OR ———
+        // if it faces up (+y) by default, subtract π/2:
+        // e.zRotation = angle - .pi/2
+
+        // 4) (optional) smooth it:
+        // let smoothed = lerp(from: e.zRotation, to: angle, amount: tiltSmoothing)
+        // e.zRotation = smoothed
+
+        // clamp horizontally within camera bounds
+        if let gs = scene as? GameScene {
+            let minX = gs.anchorPosition(0.0, 0.0).x + enemySize.width/2
+            let maxX = gs.anchorPosition(1.0, 0.0).x - enemySize.width/2
+            e.position.x = clamp(value: e.position.x, min: minX, max: maxX)
+        }
     }
 
     // MARK: — Helpers
 
-     func clamp(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+    func clamp(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
         return value < min ? min : (value > max ? max : value)
     }
-     func lerp(from: CGFloat, to: CGFloat, amount: CGFloat) -> CGFloat {
+
+    func lerp(from: CGFloat, to: CGFloat, amount: CGFloat) -> CGFloat {
         return from + (to - from) * amount
     }
 }
