@@ -56,7 +56,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
      //print(character.position)
         // If the character has reached the platforms, start limiting the speed
         if character.position.y > getPlatformThreshold() {
-            clampSpeed(1350)
+            clampSpeed(1000)
         }
         
     }
