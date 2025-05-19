@@ -32,7 +32,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     var maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(15))
     var tiltSmoothing: CGFloat = 0.125 // easing factor
     var previousDx: CGFloat = 0 // Remember velocity to smooth tilt more
-    private var maxVelocity: CGFloat = 300
+    private var maxVelocity: CGFloat = 200
     
     // Simply configures variables
     init(config: PlayerConfig) {
