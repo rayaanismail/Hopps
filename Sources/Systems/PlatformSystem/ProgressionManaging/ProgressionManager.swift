@@ -16,6 +16,8 @@ struct ProgressionStage {
     /// Set style and distribution for different platform types
     var platformDistribution: [(style: PlatformStyle, weight: Int)]
     var textures: [String] = ["WPlatform1"]
+    /// The gravity factor, a default of one, to represent 1 * 9.81.
+    var gravity: CGFloat = 1
     var randomTexture: String {
         return textures.randomElement() ?? "WPlatform1"
     }
@@ -52,15 +54,15 @@ struct ProgressionManager {
     
     /// Initial Stage 0-25k (5% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)], textures: ["GrassPlatform01", "GrassPlatform02"])
+    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)], textures: ["GrassPlatform01", "GrassPlatform02"], gravity: 0.9)
     
     /// Second Stage 25k-50k (30% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageTwo = ProgressionStage(range: 25000..<101000, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)], textures: ["CloudPlatform01"])
+    let stageTwo = ProgressionStage(range: 25000..<101000, distanceMultiplier: 2, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)], textures: ["CloudPlatform01"], gravity: 0.75)
     
     /// Third Stage 50k-75k (50% Moving Platforms)
     /// 25% Distribution Increase, 20% Jump Height Increase
-    let stageThree = ProgressionStage(range: 101000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)], textures: ["AsteroidPlatform01", "AsteroidPlatform01"])
+    let stageThree = ProgressionStage(range: 101000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 3, jumpHeightMultiplier: 1.75, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)], textures: ["AsteroidPlatform01", "AsteroidPlatform01"], gravity: 0.6)
     
 //    /// Fourth Stage 75k+ (50% Moving Platforms)
 //    /// 50% Distribution Increase, 40% Jump Height Increase

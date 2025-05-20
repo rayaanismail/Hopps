@@ -40,7 +40,6 @@ final class ZigzagEnemy: EnemyProtocol {
         node.position = position
         constrainX(in: scene)    // Keep it within horizontal screen bounds
         startZigzag()            // Begin repeating zig-zag action
-        print("🎉 Zigzag spawned at \(position)")
     }
 
     /// Per-frame update call (unused here—motion is driven by SKActions).

@@ -13,7 +13,7 @@ final class TrackerEnemy: EnemyProtocol {
     let node = SKSpriteNode(imageNamed: "EBirdEnemy")
 
     /// Maximum movement speed (points per second).
-    let chaseSpeed: CGFloat = 500
+    let chaseSpeed: CGFloat = 100
 
     /// Interpolation factor for smoothing rotation.
     let tiltSmoothing: CGFloat = 0.125
@@ -39,7 +39,6 @@ final class TrackerEnemy: EnemyProtocol {
     /// - Parameter position: World coordinates where the tracker appears.
     func spawn(at position: CGPoint) {
         node.position = position
-        print("🎯 Tracker spawned at \(position)")
     }
 
     /// Called each frame: moves, rotates, and clamps horizontal position.

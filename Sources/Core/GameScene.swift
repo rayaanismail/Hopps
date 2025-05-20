@@ -49,6 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // 5. Physics
         physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBodyEdgeLoop())
+        physicsWorld.gravity.dy *= 0.9
     }
 
     override func update(_ currentTime: TimeInterval) {

@@ -12,7 +12,8 @@ extension PlatformSystem {
     /// Retrieves altitude, and distributes all data for the stage accross the platform system
     func distributeStage() {
         let altitude = getAltitude()
-        
+        getScene().changeGravity(progressionManager.currentStage.gravity * -9.81)
+        print(getScene().physicsWorld.gravity)
         if altitude > progressionManager.currentStageUpperBound {
             progressionManager.setCurrentStage(altitude)
             let stage = progressionManager.currentStage

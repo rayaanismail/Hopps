@@ -24,12 +24,13 @@ class EventSystem: SKNode, GameSystem {
     
     func update(deltaTime: TimeInterval) {
         startGame()
-//        debugTeleport(y: 25000, yForce: 0)
+        
     }
     
     func setup(in scene: SKScene) {
         addChild(cage)
         scene.addChild(self)
+//        debugTeleport(y: 105000, yForce: 0)
     }
     
     init(config: EventConfig) {
