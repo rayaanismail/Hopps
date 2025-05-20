@@ -10,6 +10,6 @@ import SpriteKit
 
 extension PlatformSystem {
     func fetchJumpVelocity() -> CGFloat {
-        return jumpFactor * platformDistance
+        return jumpFactor * platformDistance * 15
     }
 }

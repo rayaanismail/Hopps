@@ -25,7 +25,7 @@ extension EventSystem {
                 try await Task.sleep(for: .seconds(0.5))
                 await cage.run(AnimationManager.launchAnimation)
                 character.physicsBody = physicsBodyCopy
-                getScene().playerSystem?.jump(velocity: 500)
+                getScene().playerSystem?.jump(velocity: 8000)
                 await cage.run(AnimationManager.launchEffectAnimation)
                 
                 getScene().movement(.unpause)

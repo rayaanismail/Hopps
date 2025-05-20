@@ -52,22 +52,22 @@ struct ProgressionManager {
     
     /// Initial Stage 0-25k (5% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 2, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)])
+    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)], textures: ["GrassPlatform01", "GrassPlatform02"])
     
     /// Second Stage 25k-50k (30% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageTwo = ProgressionStage(range: 25000..<50000, distanceMultiplier: 1, jumpHeightMultiplier: 2, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)])
+    let stageTwo = ProgressionStage(range: 25000..<101000, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)], textures: ["CloudPlatform01"])
     
     /// Third Stage 50k-75k (50% Moving Platforms)
     /// 25% Distribution Increase, 20% Jump Height Increase
-    let stageThree = ProgressionStage(range: 50000..<75000, distanceMultiplier: 2, jumpHeightMultiplier: 2.4, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
+    let stageThree = ProgressionStage(range: 101000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 1, jumpHeightMultiplier: 1.35, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)], textures: ["AsteroidPlatform01", "AsteroidPlatform01"])
     
-    /// Fourth Stage 75k+ (50% Moving Platforms)
-    /// 50% Distribution Increase, 40% Jump Height Increase
-    let stageFour = ProgressionStage(range: 75000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 2.8, jumpHeightMultiplier: 3.5, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
+//    /// Fourth Stage 75k+ (50% Moving Platforms)
+//    /// 50% Distribution Increase, 40% Jump Height Increase
+//    let stageFour = ProgressionStage(range: 75000..<CGFloat.greatestFiniteMagnitude, distanceMultiplier: 2.8, jumpHeightMultiplier: 3.5, platformDistribution: [(style: .stationary, weight: 50), (style: .moving, weight: 50)])
     
     init() {
-        self.stages = [stageOne, stageTwo, stageThree, stageFour]
+        self.stages = [stageOne, stageTwo, stageThree]
         self.currentStage = stages[0]
     }
     /// Returns the proper progression stage based on altitude given to it, as well as setting the next stages upper bound.

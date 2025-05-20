@@ -72,6 +72,7 @@ extension PlatformSystem {
                 point.y = newY
                 platforms[i].position = point
                 configure(&platform)
+                platform.texture = SKTexture(imageNamed: progressionManager.currentStage.randomTexture)
                 
                 // Inside the loop, update for the next platform in the array
                 highestPlatformY += config.platformDistance
