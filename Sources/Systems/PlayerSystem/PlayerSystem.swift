@@ -10,21 +10,24 @@ import SpriteKit
 
 struct PlayerConfig {
     var size: CGSize
+    var playerScale: CGFloat = 0.65
+    var idleVelocityFloor: CGFloat = 25
 }
 
 class PlayerSystem: SKNode, GameSystem, TouchControllable {
     var canMove: Bool = true
+    let config: PlayerConfig
+    
     var altitude: CGFloat {
         get {
             return clamp(value: character.position.y, min: 0, max: CGFloat.greatestFiniteMagnitude)
         }
     }
     var character: SKSpriteNode
-    var cameraNode: SKCameraNode = SKCameraNode()
+    var movementState: PlayerAnimationState = .idle
+    
     var lastPosition: CGPoint = CGPoint.zero
-    var deltaPosition: CGPoint {
-        return CGPoint(x: character.position.x - lastPosition.x, y: character.position.y - lastPosition.y)
-    }
+    
     
     // Movement
     var targetX: CGFloat?
@@ -32,14 +35,17 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     var maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(15))
     var tiltSmoothing: CGFloat = 0.125 // easing factor
     var previousDx: CGFloat = 0 // Remember velocity to smooth tilt more
-    private var maxVelocity: CGFloat = 200
+    private var maxVelocity: CGFloat = 300
+    
+    var previousY: CGFloat = 0
     
     // Simply configures variables
     init(config: PlayerConfig) {
+        self.config = config
         character = SKSpriteNode(imageNamed: "HStanding")
 //        character.position = CGPoint(x: 0, y: -config.size.height / 2.5)
-        character.position = CGPoint(x: 0, y: 100000)
-        character.setScale(0.25)
+        character.position = CGPoint(x: 0, y: 0)
+        character.setScale(config.playerScale)
         lastPosition = character.position
         super.init()
         character = playerPhysics(&character)
@@ -51,15 +57,16 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     
     // Updates per frame
     func update(deltaTime: TimeInterval) {
-        
         movePlayer(deltaTime: deltaTime)
-        lastPosition = character.position
-     //print(character.position)
-        // If the character has reached the platforms, start limiting the speed
+        
+        
+        changeMovementState()
+        /// If the character has reached the platforms, start limiting the speed
         if character.position.y > getPlatformThreshold() {
-            clampSpeed(1000)
+//            clampSpeed(1350)
         }
         
+        lastPosition = character.position
     }
     
     // Called in scenes didMove(to: ) NO GAME LOGIC
@@ -88,6 +95,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         character.physicsBody?.allowsRotation = false
         character.physicsBody?.friction = 0.2
         character.physicsBody?.affectedByGravity = true
+        character.physicsBody?.mass = 3.5
         character.physicsBody?.categoryBitMask = PhysicsCategory.character
         character.physicsBody?.collisionBitMask = PhysicsCategory.bounce
         return character

@@ -24,7 +24,6 @@ extension PlayerSystem {
         
         // Save smoothed velocity for tilt logic
         previousDx = step
-        
         // Rotation angle based on horizontal speed
         let targetRotation = clamp(value: (direction * step) * 0.15, min: -maxTilt, max: maxTilt)
         // Tune 0.25, think of it as 0.25 degrees of tilt per pixel/frame moved.

@@ -35,8 +35,16 @@ final class AnimationManager {
         let sheet = SpriteSheet(texture: SKTexture(imageNamed: "CannonAnimation"), rows: 1, columns: 9)
         return sheet.textureForColumn(column: 0, row: 0)!
     }()
-    
-    
+    /// Animation that flops ears down simulating vertical ascent
+    static let ascendingAnimation: SKAction = {
+        let frame = getSpritesheet(imageNamed: "AscendingAnimation", rows: 1, columns: 4)
+        return SKAction.animate(with: frame, timePerFrame: 0.049)
+    }()
+    /// Animation that flops ears and opens arms for vertical descent
+    static let descendingAnimation: SKAction = {
+        let sheet = getSpritesheet(imageNamed: "DescendingAnimation", rows: 1, columns: 3)
+        return SKAction.animate(with: sheet, timePerFrame: 0.065)
+    }()
 }
 
 /// Returns a SKTexture Array for spritesheets

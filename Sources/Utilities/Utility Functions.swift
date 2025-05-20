@@ -28,6 +28,5 @@ func localizedCoordinates(origin: CGPoint, view: SKView, desiredPosition: CGPoin
     /// The formula is base + (desiredN * screendistance) - halfscreen distance
     let desiredX = origin.x + (desiredPosition.x * frame.width) - view.halfWidth()
     let desiredY = origin.y + (desiredPosition.y * frame.height) - view.halfHeight()
-    print(CGPoint(x: desiredX, y: desiredY))
     return CGPoint(x: desiredX, y: desiredY)
 }
