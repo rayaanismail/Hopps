@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "WPlatform1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "GrassPlatform02.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
