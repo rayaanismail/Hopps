@@ -13,8 +13,7 @@ import SwiftUI
 class NavigationHubViewModel {
     var currentView: UIView = .mainMenu
     
-    /// Main Menu Variables
-    var menuIconScale: CGFloat = 0.6
+    var topBarIconScale: CGFloat = 0.6
     
     enum UIView {
         case mainMenu, settings, gameOverlay, skins
@@ -39,6 +38,7 @@ struct NavigationHub: View {
                 MainMenuView(vm: vm)
             }
         }
+        .animation(.easeIn, value: vm.currentView)
     }
 }
 

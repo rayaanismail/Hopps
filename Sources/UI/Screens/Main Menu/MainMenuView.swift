@@ -21,14 +21,14 @@ struct MainMenuView: View {
                         /// Trigger Leaderboard
                     } label: {
                         Image(.leaderboardTrophy)
-                            .scaleEffect(vm.menuIconScale)
+                            .scaleEffect(vm.topBarIconScale)
                     }
                     Spacer()
                     Button {
                         vm.currentView = .settings
                     } label: {
                         Image(.settingsIcon)
-                            .scaleEffect(vm.menuIconScale)
+                            .scaleEffect(vm.topBarIconScale)
                     }
                     
                 }
