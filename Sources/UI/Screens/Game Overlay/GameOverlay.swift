@@ -1,14 +1,15 @@
 //
-//  ContentView.swift
+//  GameOverlay.swift
 //  HoppsTestScene
 //
-//  Created by Rayaan Ismail on 4/17/25.
+//  Created by Rayaan Ismail on 5/21/25.
 //
 
 import SwiftUI
 import SpriteKit
 
-struct ContentView: View {
+struct GameOverlay: View {
+    @Bindable var vm: NavigationHubViewModel
     var scene: SKScene {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
@@ -23,5 +24,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    GameOverlay(vm: NavigationHubViewModel())
 }

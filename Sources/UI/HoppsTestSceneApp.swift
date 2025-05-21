@@ -11,7 +11,7 @@ import SwiftUI
 struct HoppsTestSceneApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationHub()
         }
     }
 }

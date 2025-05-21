@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "PixelSky.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "SettingsIcon.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
