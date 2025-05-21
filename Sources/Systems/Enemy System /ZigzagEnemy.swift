@@ -5,6 +5,10 @@
 //  Created by Analu Jahi on 5/19/25.
 //
 
+enum ZigzagAnimationState {
+    case gliding
+}
+
 import SpriteKit
 
 /// A zig-zagging enemy that oscillates horizontally or vertically within bounds.
@@ -16,11 +20,12 @@ final class ZigzagEnemy: EnemyProtocol {
     let zigzagDistance: CGFloat = 100
     
     /// Size used for physics body and position calculations.
-    let enemySize = CGSize(width: 5, height: 5)
+    let enemySize = CGSize(width: 20, height: 50)
 
     /// Initializes the enemy, sets its scale, and configures physics.
     init() {
-        node.setScale(0.2)
+        node.setScale(0.3)
+        node.yScale *= 1.7
         configurePhysics()
     }
 
@@ -38,6 +43,7 @@ final class ZigzagEnemy: EnemyProtocol {
     ///   - scene: The game scene (used to compute horizontal constraints).
     func spawn(at position: CGPoint, in scene: GameScene) {
         node.position = position
+        applyAnimation(for: .gliding)
         constrainX(in: scene)    // Keep it within horizontal screen bounds
         startZigzag()            // Begin repeating zig-zag action
     }
@@ -61,7 +67,7 @@ final class ZigzagEnemy: EnemyProtocol {
 
     /// Constructs and runs the zig-zag SKAction sequence, repeating forever.
     func startZigzag() {
-        let duration = Double.random(in: 1.5...3.0)
+        let duration = Double.random(in: 0.5...1.0)
         let horizontal = Bool.random()
         let action: SKAction
 
@@ -84,5 +90,13 @@ final class ZigzagEnemy: EnemyProtocol {
 
         // Loop the action forever
         node.run(.repeatForever(action))
+    }
+    
+    func applyAnimation(for state: ZigzagAnimationState) {
+        node.removeAllActions()
+        switch state {
+        case .gliding:
+            node.run(.repeatForever(AnimationManager.zigzagAnimation), withKey: "gliding")
+        }
     }
 }

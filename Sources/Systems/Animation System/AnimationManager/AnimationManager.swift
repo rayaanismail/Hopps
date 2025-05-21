@@ -45,6 +45,17 @@ final class AnimationManager {
         let sheet = getSpritesheet(imageNamed: "DescendingAnimation", rows: 1, columns: 3)
         return SKAction.animate(with: sheet, timePerFrame: 0.065)
     }()
+    /// Animation that flaps the eagles wings to show flying
+    static let trackerAnimation: SKAction = {
+        let frame = getSpritesheet(imageNamed: "EBirdAnimation", rows: 1, columns: 11)
+        return SKAction.animate(with: frame, timePerFrame: 0.05)
+    }()
+    /// Animation that flaps the regualr birds to flying 
+    static let zigzagAnimation: SKAction = {
+        let frame = getSpritesheet(imageNamed: "RBirdAnimation", rows: 1, columns: 11)
+        return SKAction.animate(with: frame, timePerFrame: 0.05)
+    }()
+    
 }
 
 /// Returns a SKTexture Array for spritesheets

@@ -7,13 +7,18 @@
 
 import SpriteKit
 
+
+enum TrackerAnimationState {
+    case flying
+}
+
 /// A "smart" tracker enemy that homes in on the player and tilts smoothly.
 final class TrackerEnemy: EnemyProtocol {
     /// The sprite node representing the tracker bird.
     let node = SKSpriteNode(imageNamed: "EBirdEnemy")
 
     /// Maximum movement speed (points per second).
-    let chaseSpeed: CGFloat = 100
+    let chaseSpeed: CGFloat = 300
 
     /// Interpolation factor for smoothing rotation.
     let tiltSmoothing: CGFloat = 0.125
@@ -39,6 +44,7 @@ final class TrackerEnemy: EnemyProtocol {
     /// - Parameter position: World coordinates where the tracker appears.
     func spawn(at position: CGPoint) {
         node.position = position
+        applyAnimation(for: .flying)
     }
 
     /// Called each frame: moves, rotates, and clamps horizontal position.
@@ -97,4 +103,13 @@ final class TrackerEnemy: EnemyProtocol {
         let rightEdge = scene.anchorPosition(1, 0).x - halfW
         node.position.x = min(max(node.position.x, leftEdge), rightEdge)
     }
+    
+    func applyAnimation(for state: TrackerAnimationState) {
+        node.removeAllActions()
+        switch state {
+        case .flying:
+            node.run(.repeatForever(AnimationManager.trackerAnimation), withKey: "flying")
+        }
+    }
+    
 }
