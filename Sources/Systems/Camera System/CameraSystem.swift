@@ -10,12 +10,13 @@ import SpriteKit
 
 class CameraSystem: SKNode, GameSystem {
     var cameraNode: SKCameraNode = SKCameraNode()
-    var altitudeLabel: SKLabelNode = SKLabelNode(text: "Altitude: 0")
+    var altitudeLabel: SKLabelNode = SKLabelNode(text: "0")
     var maxCameraY: CGFloat = 0
     override init() {
         altitudeLabel.fontName = "AvenirNext-Bold"
         altitudeLabel.zPosition = 10
-        altitudeLabel.horizontalAlignmentMode = .right
+        altitudeLabel.horizontalAlignmentMode = .left
+        altitudeLabel.fontColor = .black
         super.init()
     }
     
@@ -49,8 +50,8 @@ class CameraSystem: SKNode, GameSystem {
             }
             
             let altitude = scene.fetchAltitude()
-            altitudeLabel.text = "Altitude: \(Int(altitude))"
-            altitudeLabel.position = scene.anchorPosition(0.9, 0.9)
+            altitudeLabel.text = "\(Int(altitude))"
+            altitudeLabel.position = scene.anchorPosition(0.1, 0.9)
         }
     }
     

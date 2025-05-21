@@ -10,15 +10,22 @@ import SpriteKit
 
 struct GameOverlay: View {
     @Bindable var vm: NavigationHubViewModel
-    var scene: SKScene {
+    @State var scene: SKScene = {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
         return scene
-    }
+    }()
     var body: some View {
-        VStack {
+        ZStack {
             SpriteView(scene: scene,  isPaused: false)
                 .ignoresSafeArea()
+            Button {
+                scene.isPaused.toggle()
+            } label: {
+                Image(.pauseIcon)
+            }
+       
+            
         }
     }
 }
