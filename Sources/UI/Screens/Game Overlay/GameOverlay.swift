@@ -8,17 +8,65 @@
 import SwiftUI
 import SpriteKit
 
+extension Notification.Name {
+  static let gameDidRestart = Notification.Name("GameScene.gameDidRestart")
+}
+
 struct GameOverlay: View {
     @Bindable var vm: NavigationHubViewModel
-    var scene: SKScene {
+    @State      var isPaused = false
+    @State      var scene: SKScene = {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
         return scene
-    }
+    }()
+
     var body: some View {
-        VStack {
-            SpriteView(scene: scene,  isPaused: false)
+        ZStack {
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
+                .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { notif in
+                    if let newScene = notif.object as? SKScene {
+                        scene = newScene
+                    }
+                }
+
+            // Pause sheet
+            if isPaused {
+                PauseScreenView(
+                    onResume: {
+                        isPaused = false
+                        scene.isPaused = false
+                    },
+                    onHome: {
+                        scene.isPaused = true
+                        vm.currentView = .mainMenu
+                    }
+                )
+                
+                .zIndex(1)
+            }
+            
+
+            /// Pause button
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        isPaused.toggle()
+                        scene.isPaused = isPaused
+                    } label: {
+                        Image(.pauseIcon)
+                            .resizable()
+                            .frame(width: 36, height: 36)
+                            .padding()
+                            .opacity(isPaused ? 0 : 1)
+                            .animation(.linear(duration: 0), value: isPaused)
+                    }
+                }
+                Spacer()
+            }
+            .zIndex(2)
         }
     }
 }

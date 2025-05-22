@@ -8,11 +8,19 @@
 import Foundation
 import SpriteKit
 
+
+
 extension GameScene {
-    func restart(){
-        let gameScene: GameScene = GameScene(size: self.view!.frame.size)
-        let transition = SKTransition.fade(withDuration: 2)
-        gameScene.scaleMode = SKSceneScaleMode.fill
-        self.view!.presentScene(gameScene, transition: transition)
-    }
+  func restart() {
+    let newScene = GameScene(size: view!.frame.size)
+    newScene.scaleMode = .resizeFill
+    view!.presentScene(newScene, transition: .fade(withDuration: 1))
+
+    // tell SwiftUI about the brand-new scene
+    NotificationCenter.default.post(
+      name: .gameDidRestart,
+      object: newScene
+    )
+  }
 }
+

@@ -35,18 +35,14 @@ struct MainMenuView: View {
                 
                 VStack {
                     // MARK: Missing Sitting Bunny Asset
-                    Button {
+                    WoodButton(title: "Start", action: {
                         vm.currentView = .gameOverlay
-                    } label: {
-                        WoodButton35(text: "Start")
-                    }
+                    })
                     .padding(.bottom, 30)
-                    Button {
-                        /// Skins Screen
-                    } label: {
-                        WoodButton35(text: "Skins\n(Coming soon)", fontSize: 17)
-                            .colorMultiply(.gray)
-                    }
+                    WoodButton(title: "Skins\n(Coming Soon)", action: {
+                        // Coming soon nigga!
+                    })
+                    .colorMultiply(.gray)
                     .disabled(true)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
