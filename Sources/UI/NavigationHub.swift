@@ -12,11 +12,19 @@ import SwiftUI
 @Observable
 class NavigationHubViewModel {
     var currentView: UIView = .mainMenu
-    
     var topBarIconScale: CGFloat = 0.6
+    var touchEnabled: Bool
+    var vibrationEnabled: Bool
+    var sfxEnabled: Bool
     
     enum UIView {
         case mainMenu, settings, gameOverlay, skins
+    }
+    
+    init() {
+        self.touchEnabled = UserDefaults.standard.bool(forKey: "touchEnabled")
+        self.vibrationEnabled = UserDefaults.standard.bool(forKey: "vibrationEnabled")
+        self.sfxEnabled = UserDefaults.standard.bool(forKey: "sfxEnabled")
     }
 }
 

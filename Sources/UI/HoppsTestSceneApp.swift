@@ -14,4 +14,12 @@ struct HoppsTestSceneApp: App {
             NavigationHub()
         }
     }
+    
+    init() {
+        // Automatically registers touchenabled and vibration enabled
+        UserDefaults.standard.register(defaults: ["touchEnabled": true])
+        UserDefaults.standard.register(defaults: ["vibrationEnabled": true])
+        UserDefaults.standard.register(defaults: ["sfxEnabled": true])
+
+    }
 }

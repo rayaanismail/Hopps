@@ -31,7 +31,7 @@ final class ZigzagEnemy: EnemyProtocol {
 
     /// Configures the physics body, category, and contact settings.
     func configurePhysics() {
-        node.physicsBody = SKPhysicsBody(rectangleOf: enemySize)
+        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemySize.width, height: enemySize.height * 0.8))
         node.physicsBody?.isDynamic = false
         node.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
         node.physicsBody?.contactTestBitMask = PhysicsCategory.character

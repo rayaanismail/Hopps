@@ -53,6 +53,7 @@ struct MainMenuView: View {
                 .padding(.top, geo.size.height * 0.5)
                 
             }
+            .padding(.top, 20)
             .frame(maxHeight: .infinity, alignment: .top)
             /// End of Screen Contents
         }
