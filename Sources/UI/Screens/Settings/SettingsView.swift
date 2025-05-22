@@ -24,7 +24,7 @@ struct SettingsView: View {
                             
                         } label: {
                             Image(.arrowIcon)
-                                .scaleEffect(vm.topBarIconScale)
+                                .scaleEffect(0.6)
                         }
                         Spacer()
                     }

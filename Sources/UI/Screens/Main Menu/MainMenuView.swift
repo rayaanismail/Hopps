@@ -32,6 +32,8 @@ struct MainMenuView: View {
                     }
                     
                 }
+                .padding(.horizontal, 30)
+                .padding(.top, 35)
                 
                 VStack {
                     // MARK: Missing Sitting Bunny Asset

@@ -12,7 +12,7 @@ import SwiftUI
 @Observable
 class NavigationHubViewModel {
     var currentView: UIView = .mainMenu
-    var topBarIconScale: CGFloat = 0.6
+    var topBarIconScale: CGFloat = 1.2
     var touchEnabled: Bool
     var vibrationEnabled: Bool
     var sfxEnabled: Bool

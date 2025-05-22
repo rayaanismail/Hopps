@@ -10,6 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     // Shared game systems
+    @Published var id = UUID() /// Use @Published to track changes
     var systems       = [GameSystem]()
     var touchSystems  = [TouchControllable]()
     var sceneStartTime: TimeInterval?

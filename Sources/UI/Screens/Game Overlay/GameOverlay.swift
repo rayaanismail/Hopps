@@ -15,7 +15,7 @@ extension Notification.Name {
 struct GameOverlay: View {
     @Bindable var vm: NavigationHubViewModel
     @State      var isPaused = false
-    @State      var scene: SKScene = {
+    @State      var scene: GameScene = {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
         return scene
@@ -23,10 +23,11 @@ struct GameOverlay: View {
 
     var body: some View {
         ZStack {
-            SpriteView(scene: scene)
+            SpriteView(scene: scene, isPaused: isPaused)
+                .id(scene.id)
                 .ignoresSafeArea()
                 .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { notif in
-                    if let newScene = notif.object as? SKScene {
+                    if let newScene = notif.object as? GameScene {
                         scene = newScene
                     }
                 }
@@ -61,6 +62,7 @@ struct GameOverlay: View {
                             .frame(width: 36, height: 36)
                             .padding()
                             .opacity(isPaused ? 0 : 1)
+                            .disabled(isPaused)
                             .animation(.linear(duration: 0), value: isPaused)
                     }
                 }
