@@ -8,29 +8,62 @@
 import SwiftUI
 
 struct PauseScreenView: View {
-    /// Called when you tap “Resume”
-    var onResume: () -> Void
+    // callbacks for each button tap
+    var onResume: () -> Void = { }
+    var onHome: () -> Void = { }
 
     var body: some View {
-        // Semi-transparent black backdrop
-        Color.black.opacity(0.6)
-            .ignoresSafeArea()
-            .overlay(
-                VStack(spacing: 20) {
-                    Text("Paused")
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
+        ZStack {
+            // optional dimmed background
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
 
-                    Button(action: onResume) {
-                        Label("Resume", systemImage: "play.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 12)
-                            .background(.ultraThinMaterial, in: Capsule())
-                    }
-                }
-            )
+            VStack(spacing: 20) {
+                WoodButton(title: "Resume",     action: onResume)
+                WoodButton(title: "Home",       action: onHome)
+            }
+        }
     }
 }
+
+struct WoodButton: View {
+    let title: String
+    let action: () -> Void
+
+    @GestureState private var isPressed = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.custom("Silom", size: 36))
+                .foregroundColor(.black)
+                .frame(maxWidth: 300)
+                .padding(.vertical, 16)
+                .background(
+                    Image("woodButton1.5")
+                        .resizable(
+                            capInsets: EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20),
+                            resizingMode: .stretch
+                        )
+                )
+                .scaleEffect(isPressed ? 0.95 : 1.0)
+        }
+        // track the press state to drive the scale effect
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 0.01)
+                .updating($isPressed) { currentState, gestureState, _ in
+                    gestureState = currentState
+                }
+        )
+    }
+}
+
+struct PauseScreenView_Previews: PreviewProvider {
+    static var previews: some View {
+        PauseScreenView(
+            onResume:     { print("Resume") },
+            onHome:       { print("Home") }
+        )
+    }
+}
+

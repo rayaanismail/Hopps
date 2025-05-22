@@ -8,14 +8,14 @@
 import SwiftUI
 import SpriteKit
 
+extension Notification.Name {
+  static let gameDidRestart = Notification.Name("GameScene.gameDidRestart")
+}
+
 struct GameOverlay: View {
     @Bindable var vm: NavigationHubViewModel
-
-    /// Simple bool to track paused state
-    @State var isPaused = false
-
-
-    @State var scene: SKScene = {
+    @State      var isPaused = false
+    @State      var scene: SKScene = {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
         return scene
@@ -23,25 +23,36 @@ struct GameOverlay: View {
 
     var body: some View {
         ZStack {
-            // Game view, paused when isPaused is true
             SpriteView(scene: scene)
                 .ignoresSafeArea()
-
-            // Pause screen overlay
-            if isPaused {
-                PauseScreenView {
-                    isPaused = false
+                .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { notif in
+                    if let newScene = notif.object as? SKScene {
+                        scene = newScene
+                    }
                 }
+
+            // Pause sheet
+            if isPaused {
+                PauseScreenView(
+                    onResume: {
+                        isPaused = false
+                        scene.isPaused = false
+                    },
+                    onHome: {
+                        scene.isPaused = true
+                        vm.currentView = .mainMenu
+                    }
+                )
+                
                 .zIndex(1)
             }
-          
+            
 
-            // Pause button always on top
+            /// Pause button
             VStack {
                 HStack {
                     Spacer()
                     Button {
-                        // Check if the scene has been restarted, and update the scene
                         isPaused.toggle()
                         scene.isPaused = isPaused
                     } label: {
@@ -49,6 +60,8 @@ struct GameOverlay: View {
                             .resizable()
                             .frame(width: 36, height: 36)
                             .padding()
+                            .opacity(isPaused ? 0 : 1)
+                            .animation(.linear(duration: 0), value: isPaused)
                     }
                 }
                 Spacer()
