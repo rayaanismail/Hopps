@@ -24,18 +24,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6B19EDF42DB1F37B00DCDCED /* HoppsTestScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoppsTestScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B19EE012DB1F37C00DCDCED /* HoppsTestSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsTestSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B19EE0B2DB1F37C00DCDCED /* HoppsTestSceneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsTestSceneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B19EDF42DB1F37B00DCDCED /* Hopps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hopps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B19EE012DB1F37C00DCDCED /* HoppsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B19EE0B2DB1F37C00DCDCED /* HoppsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "HoppsTestScene" target */ = {
+		6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "Hopps" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 6B19EDF32DB1F37B00DCDCED /* HoppsTestScene */;
+			target = 6B19EDF32DB1F37B00DCDCED /* Hopps */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -58,7 +58,7 @@
 		6B19EE3E2DB30EF000DCDCED /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "HoppsTestScene" target */,
+				6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "Hopps" target */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -104,9 +104,9 @@
 		6B19EDF52DB1F37B00DCDCED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6B19EDF42DB1F37B00DCDCED /* HoppsTestScene.app */,
-				6B19EE012DB1F37C00DCDCED /* HoppsTestSceneTests.xctest */,
-				6B19EE0B2DB1F37C00DCDCED /* HoppsTestSceneUITests.xctest */,
+				6B19EDF42DB1F37B00DCDCED /* Hopps.app */,
+				6B19EE012DB1F37C00DCDCED /* HoppsTests.xctest */,
+				6B19EE0B2DB1F37C00DCDCED /* HoppsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,9 +114,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6B19EDF32DB1F37B00DCDCED /* HoppsTestScene */ = {
+		6B19EDF32DB1F37B00DCDCED /* Hopps */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6B19EE152DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestScene" */;
+			buildConfigurationList = 6B19EE152DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "Hopps" */;
 			buildPhases = (
 				6B19EDF02DB1F37B00DCDCED /* Sources */,
 				6B19EDF12DB1F37B00DCDCED /* Frameworks */,
@@ -130,16 +130,16 @@
 				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
 				6B19EE3E2DB30EF000DCDCED /* Sources */,
 			);
-			name = HoppsTestScene;
+			name = Hopps;
 			packageProductDependencies = (
 			);
 			productName = HoppsTestScene;
-			productReference = 6B19EDF42DB1F37B00DCDCED /* HoppsTestScene.app */;
+			productReference = 6B19EDF42DB1F37B00DCDCED /* Hopps.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6B19EE002DB1F37C00DCDCED /* HoppsTestSceneTests */ = {
+		6B19EE002DB1F37C00DCDCED /* HoppsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6B19EE182DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestSceneTests" */;
+			buildConfigurationList = 6B19EE182DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTests" */;
 			buildPhases = (
 				6B19EDFD2DB1F37C00DCDCED /* Sources */,
 				6B19EDFE2DB1F37C00DCDCED /* Frameworks */,
@@ -153,16 +153,16 @@
 			fileSystemSynchronizedGroups = (
 				6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */,
 			);
-			name = HoppsTestSceneTests;
+			name = HoppsTests;
 			packageProductDependencies = (
 			);
 			productName = HoppsTestSceneTests;
-			productReference = 6B19EE012DB1F37C00DCDCED /* HoppsTestSceneTests.xctest */;
+			productReference = 6B19EE012DB1F37C00DCDCED /* HoppsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6B19EE0A2DB1F37C00DCDCED /* HoppsTestSceneUITests */ = {
+		6B19EE0A2DB1F37C00DCDCED /* HoppsUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6B19EE1B2DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestSceneUITests" */;
+			buildConfigurationList = 6B19EE1B2DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsUITests" */;
 			buildPhases = (
 				6B19EE072DB1F37C00DCDCED /* Sources */,
 				6B19EE082DB1F37C00DCDCED /* Frameworks */,
@@ -176,11 +176,11 @@
 			fileSystemSynchronizedGroups = (
 				6B19EE0E2DB1F37C00DCDCED /* HoppsTestSceneUITests */,
 			);
-			name = HoppsTestSceneUITests;
+			name = HoppsUITests;
 			packageProductDependencies = (
 			);
 			productName = HoppsTestSceneUITests;
-			productReference = 6B19EE0B2DB1F37C00DCDCED /* HoppsTestSceneUITests.xctest */;
+			productReference = 6B19EE0B2DB1F37C00DCDCED /* HoppsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +206,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6B19EDEF2DB1F37B00DCDCED /* Build configuration list for PBXProject "HoppsTestScene" */;
+			buildConfigurationList = 6B19EDEF2DB1F37B00DCDCED /* Build configuration list for PBXProject "Hopps" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -220,9 +220,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6B19EDF32DB1F37B00DCDCED /* HoppsTestScene */,
-				6B19EE002DB1F37C00DCDCED /* HoppsTestSceneTests */,
-				6B19EE0A2DB1F37C00DCDCED /* HoppsTestSceneUITests */,
+				6B19EDF32DB1F37B00DCDCED /* Hopps */,
+				6B19EE002DB1F37C00DCDCED /* HoppsTests */,
+				6B19EE0A2DB1F37C00DCDCED /* HoppsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,12 +278,12 @@
 /* Begin PBXTargetDependency section */
 		6B19EE032DB1F37C00DCDCED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6B19EDF32DB1F37B00DCDCED /* HoppsTestScene */;
+			target = 6B19EDF32DB1F37B00DCDCED /* Hopps */;
 			targetProxy = 6B19EE022DB1F37C00DCDCED /* PBXContainerItemProxy */;
 		};
 		6B19EE0D2DB1F37C00DCDCED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6B19EDF32DB1F37B00DCDCED /* HoppsTestScene */;
+			target = 6B19EDF32DB1F37B00DCDCED /* Hopps */;
 			targetProxy = 6B19EE0C2DB1F37C00DCDCED /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -415,10 +415,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FR6V5NG9X5;
+				DEVELOPMENT_TEAM = 59CSPCLHJS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Hopps;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -444,10 +445,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FR6V5NG9X5;
+				DEVELOPMENT_TEAM = 59CSPCLHJS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Hopps;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -480,7 +482,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HoppsTestScene.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HoppsTestScene";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hopps.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hopps";
 			};
 			name = Debug;
 		};
@@ -498,7 +500,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HoppsTestScene.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HoppsTestScene";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hopps.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hopps";
 			};
 			name = Release;
 		};
@@ -537,7 +539,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6B19EDEF2DB1F37B00DCDCED /* Build configuration list for PBXProject "HoppsTestScene" */ = {
+		6B19EDEF2DB1F37B00DCDCED /* Build configuration list for PBXProject "Hopps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B19EE132DB1F37C00DCDCED /* Debug */,
@@ -546,7 +548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6B19EE152DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestScene" */ = {
+		6B19EE152DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "Hopps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B19EE162DB1F37C00DCDCED /* Debug */,
@@ -555,7 +557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6B19EE182DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestSceneTests" */ = {
+		6B19EE182DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B19EE192DB1F37C00DCDCED /* Debug */,
@@ -564,7 +566,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6B19EE1B2DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsTestSceneUITests" */ = {
+		6B19EE1B2DB1F37C00DCDCED /* Build configuration list for PBXNativeTarget "HoppsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B19EE1C2DB1F37C00DCDCED /* Debug */,
