@@ -14,5 +14,6 @@ extension GameScene {
         let transition = SKTransition.fade(withDuration: 2)
         gameScene.scaleMode = SKSceneScaleMode.fill
         self.view!.presentScene(gameScene, transition: transition)
+        return
     }
 }

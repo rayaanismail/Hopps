@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct PauseScreenView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    /// Called when you tap “Resume”
+    var onResume: () -> Void
 
-#Preview {
-    PauseScreenView()
+    var body: some View {
+        // Semi-transparent black backdrop
+        Color.black.opacity(0.6)
+            .ignoresSafeArea()
+            .overlay(
+                VStack(spacing: 20) {
+                    Text("Paused")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+
+                    Button(action: onResume) {
+                        Label("Resume", systemImage: "play.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .background(.ultraThinMaterial, in: Capsule())
+                    }
+                }
+            )
+    }
 }
