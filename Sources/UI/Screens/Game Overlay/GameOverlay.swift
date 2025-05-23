@@ -24,7 +24,7 @@ struct GameOverlay: View {
     var body: some View {
         ZStack {
             SpriteView(scene: scene, isPaused: isPaused)
-                .id(scene.id)
+               
                 .ignoresSafeArea()
                 .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { notif in
                     if let newScene = notif.object as? GameScene {

@@ -5,6 +5,7 @@
 //  Created by Rayaan Ismail on 5/21/25.
 //
 
+import GameKit
 import Foundation
 import SwiftUI
 
@@ -42,13 +43,17 @@ struct NavigationHub: View {
             case .gameOverlay:
                 GameOverlay(vm: vm)
                 
+            
+                
             default:
                 MainMenuView(vm: vm)
             }
         }
         .animation(.easeIn, value: vm.currentView)
+     
+        }
     }
-}
+
 
 
 #Preview {

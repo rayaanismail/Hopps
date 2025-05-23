@@ -24,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		47C61CF22DE0F1DE00E05C8C /* Hopps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hopps.entitlements; sourceTree = "<group>"; };
 		6B19EDF42DB1F37B00DCDCED /* Hopps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hopps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B19EE012DB1F37C00DCDCED /* HoppsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B19EE0B2DB1F37C00DCDCED /* HoppsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoppsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +94,7 @@
 		6B19EDEB2DB1F37B00DCDCED = {
 			isa = PBXGroup;
 			children = (
+				47C61CF22DE0F1DE00E05C8C /* Hopps.entitlements */,
 				6B19EE3E2DB30EF000DCDCED /* Sources */,
 				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
 				6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */,
@@ -413,6 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hopps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 59CSPCLHJS;
@@ -443,6 +446,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hopps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 59CSPCLHJS;
