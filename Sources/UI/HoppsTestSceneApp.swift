@@ -20,6 +20,8 @@ struct HoppsTestSceneApp: App {
         UserDefaults.standard.register(defaults: ["touchEnabled": true])
         UserDefaults.standard.register(defaults: ["vibrationEnabled": true])
         UserDefaults.standard.register(defaults: ["sfxEnabled": true])
+        
+        GameCenterManager.shared.authenticateLocalPlayer()
 
     }
 }

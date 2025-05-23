@@ -20,7 +20,6 @@ struct MainMenuView: View {
                 HStack {
                     Button {
                         // Ensure the player is authenticated, then show the GC UI
-                        GameCenterManager.shared.authenticateLocalPlayer()
                         GameCenterManager.shared.showLeaderboard()
                     } label: {
                         Image(.leaderboardTrophy)

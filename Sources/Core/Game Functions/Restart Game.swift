@@ -11,16 +11,18 @@ import SpriteKit
 
 
 extension GameScene {
-  func restart() {
-    let newScene = GameScene(size: view!.frame.size)
-    newScene.scaleMode = .resizeFill
-    view!.presentScene(newScene, transition: .fade(withDuration: 1))
-
-    // tell SwiftUI about the brand-new scene
-    NotificationCenter.default.post(
-      name: .gameDidRestart,
-      object: newScene
-    )
-  }
+    func restart() {
+        let newScene = GameScene(size: view!.frame.size)
+        newScene.scaleMode = .resizeFill
+        view!.presentScene(newScene, transition: .fade(withDuration: 1))
+        let finalAltitude = Int(fetchAltitude())
+        GameCenterManager.shared.submitScore(finalAltitude)
+        
+        // tell SwiftUI about the brand-new scene
+        NotificationCenter.default.post(
+            name: .gameDidRestart,
+            object: newScene
+        )
+    }
 }
 

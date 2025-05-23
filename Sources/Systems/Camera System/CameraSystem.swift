@@ -51,8 +51,7 @@ class CameraSystem: SKNode, GameSystem {
         // Check for fall below view bottom -> end run
         if characterY < (cameraY - view.halfHeight() - 50) {
             // Grab final altitude and submit to Game Center
-            let finalAltitude = scene.fetchAltitude()
-            GameCenterManager.shared.submitScore(Int(finalAltitude))
+            
 
             // Restart the scene
             scene.restart()

@@ -37,10 +37,11 @@ struct GameOverlay: View {
                 PauseScreenView(
                     onResume: {
                         isPaused = false
-                        scene.isPaused = false
+                        scene.isPaused = isPaused
                     },
                     onHome: {
                         scene.isPaused = true
+                        scene.restart()
                         vm.currentView = .mainMenu
                     }
                 )
