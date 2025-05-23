@@ -47,7 +47,6 @@ extension PlayerSystem {
         
         /// If player is falling, switch his state & animate him falling forever ONCE until his state changes
         if movementState == .descending && (character.action(forKey: "descending") == nil) {
-            print("descending")
             character.removeAllActions()
             
         }

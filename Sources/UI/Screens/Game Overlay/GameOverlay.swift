@@ -9,10 +9,11 @@ import SwiftUI
 import SpriteKit
 
 extension Notification.Name {
-  static let gameDidRestart = Notification.Name("GameScene.gameDidRestart")
+    static let gameDidRestart = Notification.Name("GameScene.gameDidRestart")
 }
 
 struct GameOverlay: View {
+    @Environment(\.scenePhase) var scenePhase
     @Bindable var vm: NavigationHubViewModel
     @State      var isPaused = false
     @State      var scene: GameScene = {
@@ -20,18 +21,21 @@ struct GameOverlay: View {
         scene.scaleMode = .resizeFill
         return scene
     }()
-
+    
     var body: some View {
         ZStack {
             SpriteView(scene: scene, isPaused: isPaused)
-               
                 .ignoresSafeArea()
                 .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { notif in
                     if let newScene = notif.object as? GameScene {
                         scene = newScene
                     }
                 }
-
+                .onChange(of: scenePhase) { oldPhase, newPhase in
+                    if newPhase == .active {
+                        scene.isPaused = isPaused
+                    }
+                }
             // Pause sheet
             if isPaused {
                 PauseScreenView(
@@ -49,7 +53,7 @@ struct GameOverlay: View {
                 .zIndex(1)
             }
             
-
+            
             /// Pause button
             VStack {
                 HStack {

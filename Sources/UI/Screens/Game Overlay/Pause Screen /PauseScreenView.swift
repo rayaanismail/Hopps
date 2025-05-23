@@ -61,8 +61,8 @@ struct WoodButton: View {
 struct PauseScreenView_Previews: PreviewProvider {
     static var previews: some View {
         PauseScreenView(
-            onResume:     { print("Resume") },
-            onHome:       { print("Home") }
+            onResume:     {  },
+            onHome:       {  }
         )
     }
 }
