@@ -17,7 +17,7 @@ final class ZigzagEnemy: EnemyProtocol {
     let node = SKSpriteNode(imageNamed: "RBirdEnemy")
     
     /// Distance (in points) the enemy moves per zig or zag.
-    let zigzagDistance: CGFloat = 100
+    let zigzagDistance: CGFloat = 200
     
     /// Size used for physics body and position calculations.
     let enemySize = CGSize(width: 20, height: 50)
@@ -67,7 +67,7 @@ final class ZigzagEnemy: EnemyProtocol {
 
     /// Constructs and runs the zig-zag SKAction sequence, repeating forever.
     func startZigzag() {
-        let duration = Double.random(in: 0.5...1.0)
+        let duration = Double.random(in: 0.75...1.75)
         let horizontal = Bool.random()
         let action: SKAction
 
