@@ -9,7 +9,7 @@ import SpriteKit
 /// Orchestrates spawning, updating, and cleanup of all enemy types.
 final class EnemySystem: SKNode, GameSystem {
     /// Single tracker instance that homes in on the player.
-    var tracker: TrackerEnemy?
+//    var tracker: TrackerEnemy?
     /// Array of active zig-zag enemies.
     var zigzags: [ZigzagEnemy] = []
     /// Accumulates time to know when to spawn the next zig-zag.
@@ -32,14 +32,14 @@ final class EnemySystem: SKNode, GameSystem {
         guard let gs = scene as? GameScene, let view = gs.view else { return }
 
         // ─── Tracker spawning and update ─────────────────────
-        if tracker == nil {
-            let t = TrackerEnemy()
-            let spawnPos = calculateTrackerSpawn(in: gs, view: view)
-            t.spawn(at: spawnPos)
-            addChild(t.node)
-            tracker = t
-        }
-        tracker?.update(deltaTime: deltaTime, in: gs)
+//        if tracker == nil {
+//            let t = TrackerEnemy()
+//            let spawnPos = calculateTrackerSpawn(in: gs, view: view)
+//            t.spawn(at: spawnPos)
+//            addChild(t.node)
+//            tracker = t
+//        }
+//        tracker?.update(deltaTime: deltaTime, in: gs)
 
         // ─── Zig-zag spawning ───────────────────────────────
         zigzagTimer += deltaTime

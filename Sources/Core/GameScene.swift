@@ -54,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: TimeInterval) {
+        guard !self.isPaused else { return }
         gameTime.update(currentTime: currentTime)
         systems.forEach { $0.update(deltaTime: gameTime.deltaTime) }
         
