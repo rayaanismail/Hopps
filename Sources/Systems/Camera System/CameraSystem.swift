@@ -54,7 +54,9 @@ class CameraSystem: SKNode, GameSystem {
             
 
             // Restart the scene
-            scene.restart()
+            
+            NotificationCenter.default.post(name: .playerDied, object: scene)
+//            scene.isPaused = true 
         }
 
         // Update altitude label every frame

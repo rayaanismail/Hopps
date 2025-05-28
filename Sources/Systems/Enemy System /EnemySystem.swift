@@ -29,7 +29,7 @@ final class EnemySystem: SKNode, GameSystem {
     /// - Parameter deltaTime: Time elapsed since last update.
     func update(deltaTime: TimeInterval) {
         // Ensure we have a GameScene and its SKView.
-        guard let gs = scene as? GameScene, let view = gs.view else { return }
+        guard let gs = scene as? GameScene else { return }
 
         // ─── Tracker spawning and update ─────────────────────
 //        if tracker == nil {

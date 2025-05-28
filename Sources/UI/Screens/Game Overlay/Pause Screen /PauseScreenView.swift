@@ -30,7 +30,7 @@ struct WoodButton: View {
     let title: String
     let action: () -> Void
 
-    @GestureState private var isPressed = false
+    @GestureState var isPressed = false
 
     var body: some View {
         Button(action: action) {

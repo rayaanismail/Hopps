@@ -37,7 +37,12 @@ extension GameScene {
         // Instead of calling restart when you make contact with enemy, instead display a screen that has two buttons (for now) that is either restart or home.
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.enemy {
-            restart()
+            scene?.isPaused = true
+            Task {
+                try await Task.sleep(for: .seconds(0.5))
+                NotificationCenter.default.post(name: .playerDied, object: scene)
+            }
+            
         }
     }
     

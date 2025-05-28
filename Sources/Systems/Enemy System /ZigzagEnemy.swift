@@ -18,20 +18,18 @@ final class ZigzagEnemy: EnemyProtocol {
     
     /// Distance (in points) the enemy moves per zig or zag.
     let zigzagDistance: CGFloat = 200
-    
-    /// Size used for physics body and position calculations.
-    let enemySize = CGSize(width: 20, height: 50)
 
     /// Initializes the enemy, sets its scale, and configures physics.
     init() {
         node.setScale(0.3)
         node.yScale *= 1.7
+        node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         configurePhysics()
     }
 
     /// Configures the physics body, category, and contact settings.
     func configurePhysics() {
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemySize.width, height: enemySize.height * 0.8))
+        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: node.size.width * 0.8, height: node.size.height * 0.1 ))
         node.physicsBody?.isDynamic = false
         node.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
         node.physicsBody?.contactTestBitMask = PhysicsCategory.character
@@ -56,8 +54,8 @@ final class ZigzagEnemy: EnemyProtocol {
     /// Adds an SKConstraint so the node stays within the scene’s left/right edges.
     /// - Parameter scene: The GameScene used to calculate anchor positions.
     func constrainX(in scene: GameScene) {
-        let minX = scene.anchorPosition(0, 0).x + enemySize.width / 2
-        let maxX = scene.anchorPosition(1, 0).x - enemySize.width / 2
+        let minX = scene.anchorPosition(0, 0).x + node.size.width / 2
+        let maxX = scene.anchorPosition(1, 0).x - node.size.width / 2
         node.constraints = [
             SKConstraint.positionX(
                 SKRange(lowerLimit: minX, upperLimit: maxX)
