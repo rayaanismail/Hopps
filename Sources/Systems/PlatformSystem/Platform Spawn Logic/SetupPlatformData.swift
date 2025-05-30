@@ -20,4 +20,28 @@ extension PlatformSystem {
             upper: halfWidth * config.marginPercentage
         )
     }
+    /// Resets platform data, relies on camera / player position, reset after applying the start event
+    func resetPlatformData() {
+        // Resets platform compute data
+        setupPlatformData()
+        
+        // Reset currentStage, apply jump and distance multiplier
+        let altitude = getAltitude()
+        progressionManager.setCurrentStage(altitude)
+        let stage = progressionManager.currentStage
+        jumpFactor = stage.jumpHeightMultiplier
+        platformDistance = stage.distanceMultiplier * config.platformDistance
+        
+        // Removes all platforms, then sets them up again
+        platforms.forEach { node in
+            node.removeFromParent()
+        }
+        platforms.removeAll()
+        
+        setupPlatforms()
+        
+        
+        
+        
+    }
 }

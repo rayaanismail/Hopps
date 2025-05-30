@@ -11,33 +11,28 @@ import SpriteKit
 
 
 extension GameScene {
-  func restart() {
-    // 1) Build a fresh scene
-      print("New scene")
-    let newScene = GameScene(size: size)
-    newScene.scaleMode = scaleMode
-    newScene.isPaused = false          // make extra sure the scene itself isn't paused
-
-//    // 2) Submit your score
-//    let finalAltitude = Int(fetchAltitude())
-//    GameCenterManager.shared.submitScore(finalAltitude)
-
-    // 3) Swap on the SKView and UNPAUSE it
-    if let skView = skViewRef {
-      skView.presentScene(
-        newScene,
-        transition: .fade(withDuration: 1)
-      )
-      skView.isPaused = false         /// UNPAUSE the view so it actually runs
+    func restart() {
+        print("restarting scene...")
+        let currentTime = gameTime.sceneStartTime + gameTime.elapsedTime
+        print("Current time is \(currentTime)")
+        gameTime.reset(currentTime: currentTime)
+//        Goal: (One function)
+//        Reset the game back to its starting state.
+//
+//
+//        How:
+//        1. Take player back to initial position, behind cannon.
+//        2. Move camera back to initial position, CGPoint.zero?
+        eventSystem?.startGame()
+//        3. Reset platforms back to their threshold
+        platformSystem?.resetPlatformData()
+//        4. Reset enemies, reinit?
+//        5. Restart cannon animation, and apply impulse.
+//        6. On death, allow UI to handle transitioning.
+//            1. On ‘retry’ reset the game,
+        
+        
     }
-
-    // 4) Tell SwiftUI to swap its @State `scene` binding
-    
-    NotificationCenter.default.post(
-      name: .gameDidRestart,
-      object: newScene
-    )
-  }
 }
 
 

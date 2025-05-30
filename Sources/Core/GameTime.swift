@@ -33,11 +33,7 @@ struct GameTime {
     /// Initializes and updates the scenes time data based on the current time interval.
     mutating func update(currentTime: TimeInterval) {
         if !initialized {
-            sceneStartTime = currentTime
-            lastTime = currentTime
-            initialized = true
-            deltaTime = 0
-            elapsedTime = 0
+            reset(currentTime: currentTime)
             return
         }
         
@@ -56,6 +52,14 @@ struct GameTime {
             
             FPS: \(fps.rounded())
             """)
+    }
+    
+    mutating func reset(currentTime: TimeInterval) {
+        sceneStartTime = currentTime
+        lastTime = currentTime
+        initialized = true
+        deltaTime = 0
+        elapsedTime = 0
     }
 }
 

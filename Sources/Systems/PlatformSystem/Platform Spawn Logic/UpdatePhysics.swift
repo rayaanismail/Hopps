@@ -17,13 +17,13 @@ extension PlatformSystem {
             let platformBottom = platforms[i].position.y
             let playerMid = getCharacter().position.y - getCharacter().frame.height / 3
             
-            let shrunkPlatformSize = CGSize(width: platform.size.width * 0.8, height: platform.size.height * 1.2)
             
             if playerMid < platformBottom {
                 platform.physicsBody = nil
             } else {
                 // MARK: Edit this to adjust hitbox
-                platform.physicsBody = SKPhysicsBody(rectangleOf: shrunkPlatformSize)
+                let platformHitboxSize = CGSize(width: platform.size.width, height: platform.size.height * 0.3)
+                platform.physicsBody = SKPhysicsBody(rectangleOf: platformHitboxSize)
                 platform.physicsBody?.isDynamic = false
                 platform.physicsBody?.categoryBitMask = PhysicsCategory.bounce
                 platform.physicsBody?.contactTestBitMask = PhysicsCategory.character

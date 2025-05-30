@@ -63,7 +63,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         changeMovementState()
         /// If the character has reached the platforms, start limiting the speed
         if character.position.y > getPlatformThreshold() {
-//            clampSpeed(1350)
+            clampSpeed(1350)
         }
         
         lastPosition = character.position
@@ -90,7 +90,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     
     // Applies physics to the player node
     func playerPhysics(_ character: inout SKSpriteNode) -> SKSpriteNode {
-        character.physicsBody = SKPhysicsBody(rectangleOf: character.size)
+        character.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: character.size.width * 0.5, height: character.size.height * 0.8))
         character.physicsBody?.isDynamic = true
         character.physicsBody?.allowsRotation = false
         character.physicsBody?.friction = 0.2
