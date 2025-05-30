@@ -10,11 +10,11 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     // Shared game systems
-    var skViewRef: SKView?
     var systems       = [GameSystem]()
     var touchSystems  = [TouchControllable]()
     var sceneStartTime: TimeInterval?
     var gameTime = GameTime()
+    weak var gameState: GameState?
 
     // These must NOT be private so everyone can access them:
     var backgroundSystem: BackgroundSystem?
@@ -25,8 +25,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var eventSystem:      EventSystem?
 
     override func didMove(to view: SKView) {
-        super.didMove(to: view)
-        self.skViewRef = view
         let bg = BackgroundSystem(config: BackgroundConfig(view: view))
         let player = PlayerSystem(config: PlayerConfig(size: view.frame.size))
         let cam    = CameraSystem()
@@ -53,10 +51,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBodyEdgeLoop())
         physicsWorld.gravity.dy *= 0.9
+        self.isPaused = false
     }
 
     override func update(_ currentTime: TimeInterval) {
-//        guard !self.isPaused else { return }
+        SyncGamestate()
+        guard gameState?.isPaused == false else { return }
         gameTime.update(currentTime: currentTime)
         systems.forEach { $0.update(deltaTime: gameTime.deltaTime) }
         

@@ -51,12 +51,7 @@ class CameraSystem: SKNode, GameSystem {
         // Check for fall below view bottom -> end run
         if characterY < (cameraY - view.halfHeight() - 50) {
             // Grab final altitude and submit to Game Center
-            
-
-            // Restart the scene
-            
-            NotificationCenter.default.post(name: .playerDied, object: scene)
-//            scene.isPaused = true 
+            getScene().saveState(gameOver: true)
         }
 
         // Update altitude label every frame
