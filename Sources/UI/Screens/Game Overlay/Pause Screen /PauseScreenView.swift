@@ -9,8 +9,9 @@ import SwiftUI
 
 struct PauseScreenView: View {
     // callbacks for each button tap
-    var onResume: () -> Void = { }
-    var onHome: () -> Void = { }
+    var scene: Binding<GameScene>
+    @StateObject var gameState: GameState
+    var vm: Binding<NavigationHubViewModel>
 
     var body: some View {
         ZStack {
@@ -19,8 +20,14 @@ struct PauseScreenView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 20) {
-                WoodButton(title: "Resume",     action: onResume)
-                WoodButton(title: "Home",       action: onHome)
+                WoodButton(title: "Resume") {
+                    gameState.isPaused = false
+                    scene.isPaused.wrappedValue = false
+                }
+                WoodButton(title: "Home") {
+                    vm.wrappedValue.currentView = .mainMenu
+                    gameState.isPaused = true
+                }
             }
         }
     }
@@ -54,15 +61,6 @@ struct WoodButton: View {
                 .updating($isPressed) { currentState, gestureState, _ in
                     gestureState = currentState
                 }
-        )
-    }
-}
-
-struct PauseScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        PauseScreenView(
-            onResume:     {  },
-            onHome:       {  }
         )
     }
 }

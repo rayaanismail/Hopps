@@ -14,17 +14,17 @@ extension EventSystem {
         if timeData.elapsedTime == 0 {
             cage.alpha = 1
             let character = getScene().fetchCharacter()
-            let physicsBodyCopy = getScene().fetchCharacter().physicsBody
-            character.physicsBody = nil
+            character.physicsBody?.isDynamic = false
             character.position = CGPoint(x: 0, y: -300)
             cage.position = CGPoint(x: 0, y: getScene().fetchCharacter().position.y)
             // Disable Player Movement
             getScene().movement(.pause)
+            getScene().camera?.position = CGPoint.zero
             
             Task {
                 try await Task.sleep(for: .seconds(0.5))
                 await cage.run(AnimationManager.launchAnimation)
-                character.physicsBody = physicsBodyCopy
+                character.physicsBody?.isDynamic = true
                 getScene().playerSystem?.jump(velocity: 8000)
                 await cage.run(AnimationManager.launchEffectAnimation)
                 

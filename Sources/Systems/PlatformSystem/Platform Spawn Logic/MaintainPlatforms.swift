@@ -20,7 +20,7 @@ extension PlatformSystem {
         let imageName = progressionManager.currentStage.randomTexture
         var platform = SKSpriteNode(imageNamed: imageName)
         platform.setScale(config.platformScale)
-        platform.anchorPoint = CGPoint(x: 0.5, y: 0)
+        platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         platform.position = point
         platform.zPosition = -1
         
@@ -68,16 +68,19 @@ extension PlatformSystem {
             // If platforms are below the player...
             if platform.position.y < characterY - viewHeight {
                 // New Y-position is above the highest existing platform
+                
                 let newY = highestPlatformY + platformDistance
                 var point = randomPosition(index: i) /// Reuse the random alternating x, but not the y
                 point.y = newY
-                platforms[i].position = point
+                platform.removeAllActions()
+                platform.position = point
                 
                 platform.texture = SKTexture(imageNamed: progressionManager.currentStage.randomTexture)
                 
                 // Inside the loop, update for the next platform in the array
                 highestPlatformY += config.platformDistance
                 configure(&platform)
+                
             }
         }
     }

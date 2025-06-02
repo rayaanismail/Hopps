@@ -60,11 +60,13 @@ class PlatformSystem: SKNode, GameSystem {
     }
     
     func setupGroundPlatform(_ scene: SKScene) {
+        let screenWidth = getView().frame.width
         floorPlatform = SKSpriteNode(imageNamed: "FloorPlatform")
         /// Positioned in the middle of the screen, slightly below the zero
         floorPlatform.position = getScene().anchorPosition(0.5, 0.05)
         floorPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: floorPlatform.size.width, height: floorPlatform.size.height * 0.3))
-        floorPlatform.setScale(0.5)
+        floorPlatform.setScale(0.7)
+        floorPlatform.yScale = screenWidth / 1179
         floorPlatform.zPosition = -10
         floorPlatform.physicsBody?.isDynamic = false
     }

@@ -8,11 +8,19 @@
 import Foundation
 import SpriteKit
 extension EventSystem {
-    func debugTeleport(y: CGFloat, yForce: CGFloat) {
-        let character = getScene().fetchCharacter()
+    enum DebugState {
+        case on, off
+    }
+    
+    func debugTeleport(y: CGFloat, yForce: CGFloat, debugState: DebugState) {
+        let characterY: CGFloat = getScene().fetchCharacter().position.y
+        if characterY < y && debugState == .on {
+            let character = getScene().fetchCharacter()
+            
+            character.position = CGPoint(x: character.position.x, y: y)
+            character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: yForce))
+        }
         
-        character.position = CGPoint(x: 0, y: y)
-        character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: yForce))
     }
 }
 
