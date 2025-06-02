@@ -8,116 +8,62 @@
 import SwiftUI
 import SpriteKit
 
-extension Notification.Name {
-    static let gameDidRestart = Notification.Name("GameScene.gameDidRestart")
-    static let playerDied     = Notification.Name("GameScene.playerDied")
-}
-
 struct GameOverlay: View {
-    @Environment(\.scenePhase) var scenePhase
-    @Bindable var vm: NavigationHubViewModel
-    @State var finalAltitude: Int = 0
-    @State      var isPaused = false
-    @State var didDie = false
-    @State      var scene: GameScene = {
-        let scene = GameScene()
-        scene.scaleMode = .resizeFill
-        return scene
+    @State var vm: NavigationHubViewModel
+    @StateObject var gameState: GameState = GameState()
+    @State var scene: GameScene = {
+        let newScene = GameScene()
+        newScene.scaleMode = .resizeFill
+        return newScene
     }()
     
     var body: some View {
         ZStack {
-            SpriteView(scene: scene, isPaused: isPaused || didDie)
+            SpriteView(scene: scene, debugOptions: .showsPhysics)
                 .ignoresSafeArea()
-            //  When our restart() posts this, swap in the new scene:
-                .onReceive(NotificationCenter.default.publisher(for: .gameDidRestart)) { note in
-                   // print(" GameDidRestart received in overlay:", note.object as Any)
-                    if let newScene = note.object as? GameScene {
-                        scene    = newScene
-                        isPaused = false
-                        didDie   = false
-                    }
-                }
-            //  When the player dies, flip the flag:
-                .onReceive(NotificationCenter.default.publisher(for: .playerDied)) { _ in
-                    finalAltitude = Int(scene.fetchAltitude())
-                    didDie = true
-                }
-            //  And if ever navigate back into the game overlay, reset everything:
-                .onChange(of: vm.currentView) { oldView, newView in
-                    if newView == .gameOverlay {
-                        let fresh = GameScene(size: UIScreen.main.bounds.size)
-                        fresh.scaleMode = .resizeFill
-                        scene    = fresh
-                        isPaused = false
-                        didDie   = false
-                    }
+                .disabled(gameState.isPaused || gameState.isGameOver)
+                .onAppear {
+                    scene.gameState = gameState
                 }
             
-            // Pause sheet
-            if isPaused {
-                PauseScreenView(
-                    onResume: {
-                        isPaused = false
-                        scene.isPaused = isPaused
-                    },
-                    onHome: {
-                        scene.isPaused = true
-                        scene.restart()
-                        vm.currentView = .mainMenu
-                    }
-                )
+            if gameState.isPaused && !gameState.isGameOver{
+                PauseScreenView(scene: $scene, gameState: gameState, vm: $vm)
                 
-                .zIndex(1)
-            }
-            
-            if didDie {
-                //
-                Color.black
-                    .ignoresSafeArea()
-                    .zIndex(2)
-            
-                //
-                DeathScreenView(
-                    finalAltitude: finalAltitude, onRetry: {
-                        didDie = false
-                        scene.restart()
-                        scene.isPaused = false
-                        
-                    },
-                    onHome: {
-                        didDie = false
-                        scene.restart()
-                        vm.currentView = .mainMenu
-                    }
-                )
-                .zIndex(3)
-            }
-            /// Pause button
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        isPaused.toggle()
-                        scene.isPaused = isPaused
-                    } label: {
-                        Image(.pauseIcon)
-                            .resizable()
-                            .frame(width: 36, height: 36)
-                            .padding()
-                            .opacity(isPaused ? 0 : 1)
-                            .opacity(didDie ? 0 : 1)
-                            .disabled(isPaused)
-                            .animation(.linear(duration: 0), value: isPaused)
-                            .animation(.linear(duration: 0), value: didDie)
-                    }
+            } else if !gameState.isPaused && !gameState.isGameOver {
+                Button {
+                    setPauseState(!gameState.isPaused)
+                } label: {
+                    Image(.pauseIcon)
                 }
-                Spacer()
+                .scaleEffect(0.6)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .padding(.horizontal)
+                .padding(.top, -25)
+            } else if gameState.isGameOver {
+                DeathScreenView(vm: $vm, scene: $scene, gameState: gameState)
+                    .onAppear {
+                        setPauseState(true)
+                    }
             }
-            .zIndex(2)
+            
         }
     }
     
+    func makeScene() -> GameScene {
+        let newScene = GameScene()
+        newScene.scaleMode = .resizeFill
+//        resetGameState()
+        newScene.gameState = gameState
+        return newScene
+    }
     
-  
+    func setPauseState(_ input: Bool) {
+        gameState.isPaused = input
+        scene.isPaused = input
+    }
+    
+}
+
+#Preview {
+    GameOverlay(vm: NavigationHubViewModel())
 }

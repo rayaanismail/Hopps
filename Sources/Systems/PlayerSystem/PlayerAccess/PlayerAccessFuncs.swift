@@ -28,4 +28,12 @@ extension PlayerSystem {
     func getView() -> SKView {
         (scene as? GameScene)?.fetchView() ?? SKView(frame: CGRect.zero)
     }
+    
+    func getPlatformThreshold() -> CGFloat {
+        (scene as? GameScene)?.fetchThresholdY() ?? 0
+    }
+    
+    func jump(velocity: CGFloat) {
+        character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: velocity))
+    }
 }

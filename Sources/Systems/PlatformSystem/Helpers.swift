@@ -17,7 +17,7 @@ extension PlatformSystem {
         
         /// Random value from 0 to width of phone screen
         var randomX = CGFloat.random(in: 0...width) - (width / 2)
-        let setupOffset = setup == true ? config.platformSpawnOffset : lastPlatformY + 100
+        let setupOffset = (setup == true ? config.platformSpawnOffset : lastPlatformY + 100)
         
         /// Offsets positions based on index.
         if even {

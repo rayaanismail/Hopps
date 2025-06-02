@@ -55,7 +55,6 @@ struct NavigationHub: View {
     }
 
 
-
 #Preview {
     NavigationHub()
 }
