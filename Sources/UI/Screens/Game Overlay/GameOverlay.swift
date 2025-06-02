@@ -17,6 +17,12 @@ struct GameOverlay: View {
         return newScene
     }()
     
+    
+    init(vm: NavigationHubViewModel) {
+        self.vm = vm
+        self.scene = scene
+    }
+    
     var body: some View {
         ZStack {
             SpriteView(scene: scene, debugOptions: .showsPhysics)

@@ -41,21 +41,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HoppsTestScene;
-			sourceTree = "<group>";
-		};
-		6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HoppsTestSceneTests;
-			sourceTree = "<group>";
-		};
-		6B19EE0E2DB1F37C00DCDCED /* HoppsTestSceneUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HoppsTestSceneUITests;
-			sourceTree = "<group>";
-		};
 		6B19EE3E2DB30EF000DCDCED /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -91,22 +76,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6B14BEE12DEA651C002981CF /* Defaults */ = {
-			isa = PBXGroup;
-			children = (
-				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
-				6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */,
-				6B19EE0E2DB1F37C00DCDCED /* HoppsTestSceneUITests */,
-			);
-			path = Defaults;
-			sourceTree = "<group>";
-		};
 		6B19EDEB2DB1F37B00DCDCED = {
 			isa = PBXGroup;
 			children = (
 				47C61CF22DE0F1DE00E05C8C /* Hopps.entitlements */,
 				6B19EE3E2DB30EF000DCDCED /* Sources */,
-				6B14BEE12DEA651C002981CF /* Defaults */,
 				6B19EDF52DB1F37B00DCDCED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -137,7 +111,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				6B19EDF62DB1F37B00DCDCED /* HoppsTestScene */,
 				6B19EE3E2DB30EF000DCDCED /* Sources */,
 			);
 			name = Hopps;
@@ -160,9 +133,6 @@
 			dependencies = (
 				6B19EE032DB1F37C00DCDCED /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				6B19EE042DB1F37C00DCDCED /* HoppsTestSceneTests */,
-			);
 			name = HoppsTests;
 			packageProductDependencies = (
 			);
@@ -182,9 +152,6 @@
 			);
 			dependencies = (
 				6B19EE0D2DB1F37C00DCDCED /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				6B19EE0E2DB1F37C00DCDCED /* HoppsTestSceneUITests */,
 			);
 			name = HoppsUITests;
 			packageProductDependencies = (

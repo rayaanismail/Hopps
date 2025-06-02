@@ -12,9 +12,7 @@ import SpriteKit
 
 extension GameScene {
     func restart() {
-        print("restarting scene...")
         let currentTime = gameTime.sceneStartTime + gameTime.elapsedTime
-        print("Current time is \(currentTime)")
         gameTime.reset(currentTime: currentTime)
 //        Goal: (One function)
 //        Reset the game back to its starting state.
@@ -30,7 +28,10 @@ extension GameScene {
 //        5. Restart cannon animation, and apply impulse.
 //        6. On death, allow UI to handle transitioning.
 //            1. On ‘retry’ reset the game,
-        
+        touchEnabled = UserDefaults.standard.bool(forKey: "touchEnabled")
+        vibrationEnabled = UserDefaults.standard.bool(forKey: "vibrationEnabled")
+        sfxEnabled = UserDefaults.standard.bool(forKey: "sfxEnabled")
+        print("touch \(touchEnabled)\nhaptic\(vibrationEnabled)\nsfx \(sfxEnabled)")
         
     }
 }

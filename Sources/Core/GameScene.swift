@@ -23,6 +23,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var platformSystem:   PlatformSystem?
     var enemySystem:      EnemySystem?
     var eventSystem:      EventSystem?
+    
+    // Settings
+    var touchEnabled: Bool = UserDefaults.standard.bool(forKey: "touchEnabled")
+    var vibrationEnabled: Bool = UserDefaults.standard.bool(forKey: "vibrationEnabled")
+    var sfxEnabled: Bool = UserDefaults.standard.bool(forKey: "sfxEnabled")
 
     override func didMove(to view: SKView) {
         let bg = BackgroundSystem(config: BackgroundConfig(view: view))

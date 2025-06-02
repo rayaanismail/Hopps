@@ -14,7 +14,6 @@ extension GameScene {
         if let state = gameState?.isPaused {
             if state != isPaused {
                 isPaused = state
-                print("Synced the pause")
             }
         }
     }

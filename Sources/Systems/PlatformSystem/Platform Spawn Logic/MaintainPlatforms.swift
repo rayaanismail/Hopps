@@ -59,14 +59,11 @@ extension PlatformSystem {
         
         // Find the current highest platform Y-position in the array
         var highestPlatformY = platforms.map { $0.position.y }.max() ?? 0
-        var debugCounter = 1
         
         // Loops through the platforms
         for i in platforms.indices {
             var platform = platforms[i]
             platform.size = CGSize(width: 100, height: 50)
-            print("Platform \(debugCounter) Height: \(platform.position.y)")
-            debugCounter += 1
             
             // If platforms are below the player...
             if platform.position.y < characterY - viewHeight {
