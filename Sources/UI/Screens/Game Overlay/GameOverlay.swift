@@ -19,7 +19,7 @@ struct GameOverlay: View {
     
     var body: some View {
         ZStack {
-            SpriteView(scene: scene, debugOptions: .showsPhysics)
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
                 .disabled(gameState.isPaused || gameState.isGameOver)
                 .onAppear {

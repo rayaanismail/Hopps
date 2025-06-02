@@ -16,23 +16,31 @@ extension GameScene {
         let currentTime = gameTime.sceneStartTime + gameTime.elapsedTime
         print("Current time is \(currentTime)")
         gameTime.reset(currentTime: currentTime)
-//        Goal: (One function)
-//        Reset the game back to its starting state.
-//
-//
-//        How:
-//        1. Take player back to initial position, behind cannon.
-//        2. Move camera back to initial position, CGPoint.zero?
+        //        Goal: (One function)
+        //        Reset the game back to its starting state.
+        //
+        //
+        //        How:
+        //        1. Take player back to initial position, behind cannon.
+        //        2. Move camera back to initial position, CGPoint.zero?
         eventSystem?.startGame()
-//        3. Reset platforms back to their threshold
+        //        3. Reset platforms back to their threshold
         platformSystem?.resetPlatformData()
-//        4. Reset enemies, reinit?
-//        5. Restart cannon animation, and apply impulse.
-//        6. On death, allow UI to handle transitioning.
-//            1. On ‘retry’ reset the game,
+        GameCenterManager.shared.submitScore(Int(getAltitude()))
+        //        4. Reset enemies, reinit?
+        //        5. Restart cannon animation, and apply impulse.
+        //        6. On death, allow UI to handle transitioning.
+        //            1. On ‘retry’ reset the game,
         
         
     }
+    
+    func getScene() -> GameScene {
+        return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
+    }
+    
+    func getAltitude() -> CGFloat {
+        getScene().fetchAltitude()
+    }
+    
 }
-
-

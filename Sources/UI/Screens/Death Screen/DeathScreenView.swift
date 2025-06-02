@@ -56,10 +56,10 @@ struct DeathScreenView: View {
           .frame(width: 300, height: 300)
           
           WoodButton(title: "Retry") {
-              restart()
+              UIrestart()
           }
           WoodButton(title: "Home") {
-              restart()
+              UIrestart()
               gameState.isPaused = true
               scene.wrappedValue.isPaused = true
               vm.wrappedValue.currentView = .mainMenu
@@ -69,7 +69,7 @@ struct DeathScreenView: View {
     }
   }
     
-    func restart() {
+    func UIrestart() {
         scene.wrappedValue.restart()
         scene.wrappedValue.isPaused = false
         gameState.isPaused = false
