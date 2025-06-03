@@ -29,7 +29,7 @@ final class ZigzagEnemy: EnemyProtocol {
 
     /// Configures the physics body, category, and contact settings.
     func configurePhysics() {
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: node.size.width * 0.8, height: node.size.height * 0.1 ))
+        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: node.size.width * 0.5, height: node.size.height * 0.1 ))
         node.physicsBody?.isDynamic = false
         node.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
         node.physicsBody?.contactTestBitMask = PhysicsCategory.character
@@ -65,7 +65,7 @@ final class ZigzagEnemy: EnemyProtocol {
 
     /// Constructs and runs the zig-zag SKAction sequence, repeating forever.
     func startZigzag() {
-        let duration = Double.random(in: 0.75...1.75)
+        let duration = Double.random(in: 1.0...2.0)
         let horizontal = Bool.random()
         let action: SKAction
 
