@@ -24,6 +24,7 @@ extension EventSystem {
             Task {
                 try await Task.sleep(for: .seconds(0.5))
                 await cage.run(AnimationManager.launchAnimation)
+                getSoundSystem().playCannonExplosion(&cage)
                 character.physicsBody?.isDynamic = true
                 getScene().playerSystem?.jump(velocity: 8000)
                 await cage.run(AnimationManager.launchEffectAnimation)

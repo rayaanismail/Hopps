@@ -10,7 +10,7 @@ import SpriteKit
 
 struct PlayerConfig {
     var size: CGSize
-    var playerScale: CGFloat = 0.65
+    var playerScale: CGFloat = 0.11
     var idleVelocityFloor: CGFloat = 25
 }
 

@@ -13,4 +13,8 @@ extension EventSystem {
     func getScene() -> GameScene {
         return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
     }
+    
+    func getSoundSystem() -> SoundSystem {
+        getScene().soundSystem ?? SoundSystem(config: SoundConfig())
+    }
 }
