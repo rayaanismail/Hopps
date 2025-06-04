@@ -11,14 +11,14 @@ enum ZigzagAnimationState {
 
 import SpriteKit
 
-/// A zig-zagging enemy that oscillates horizontally or vertically within bounds.
+/// A zig-zagging enemy that can now oscillate horizontally, vertically, or diagonally.
 final class ZigzagEnemy: EnemyProtocol {
     /// The sprite node representing this enemy.
     let node = SKSpriteNode(imageNamed: "RBirdEnemy")
     
     /// Distance (in points) the enemy moves per zig or zag.
     let zigzagDistance: CGFloat = 200
-
+    
     /// Initializes the enemy, sets its scale, and configures physics.
     init() {
         node.setScale(0.3)
@@ -26,15 +26,18 @@ final class ZigzagEnemy: EnemyProtocol {
         node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         configurePhysics()
     }
-
+    
     /// Configures the physics body, category, and contact settings.
     func configurePhysics() {
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: node.size.width * 0.5, height: node.size.height * 0.1 ))
+        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
+            width: node.size.width * 0.5,
+            height: node.size.height * 0.1
+        ))
         node.physicsBody?.isDynamic = false
         node.physicsBody?.categoryBitMask    = PhysicsCategory.enemy
         node.physicsBody?.contactTestBitMask = PhysicsCategory.character
     }
-
+    
     /// Spawns the enemy at a world position and starts its zig-zag motion.
     /// - Parameters:
     ///   - position: The world coordinates to place the enemy.
@@ -42,15 +45,15 @@ final class ZigzagEnemy: EnemyProtocol {
     func spawn(at position: CGPoint, in scene: GameScene) {
         node.position = position
         applyAnimation(for: .gliding)
-        constrainX(in: scene)    // Keep it within horizontal screen bounds
+        constrainX(in: scene)    // Keep within horizontal screen bounds
         startZigzag()            // Begin repeating zig-zag action
     }
-
+    
     /// Per-frame update call (unused here—motion is driven by SKActions).
     func update(deltaTime: TimeInterval, in scene: GameScene) {
         // No-op: Zig-zag movement handled entirely by SKActions
     }
-
+    
     /// Adds an SKConstraint so the node stays within the scene’s left/right edges.
     /// - Parameter scene: The GameScene used to calculate anchor positions.
     func constrainX(in scene: GameScene) {
@@ -62,14 +65,17 @@ final class ZigzagEnemy: EnemyProtocol {
             )
         ]
     }
-
+    
     /// Constructs and runs the zig-zag SKAction sequence, repeating forever.
+    /// Now includes a diagonal option in addition to horizontal/vertical.
     func startZigzag() {
         let duration = Double.random(in: 1.0...2.0)
-        let horizontal = Bool.random()
+        // 0 = horizontal, 1 = vertical, 2 = diagonal
+        let directionIndex = Int.random(in: 0...2)
         let action: SKAction
-
-        if horizontal {
+        
+        switch directionIndex {
+        case 0:
             // Horizontal zig-zag: flip the sprite when changing direction
             let faceRight = SKAction.run { self.node.xScale = abs(self.node.xScale) }
             let faceLeft  = SKAction.run { self.node.xScale = -abs(self.node.xScale) }
@@ -79,13 +85,62 @@ final class ZigzagEnemy: EnemyProtocol {
                 faceLeft,
                 .moveBy(x: zigzagDistance, y: 0, duration: duration)
             ])
-        } else {
-            // Vertical zig-zag: move up then down
+            
+        case 1:
+            //  Vertical zig-zag: move up then down
             let moveDown = SKAction.moveBy(x: 0, y: -zigzagDistance, duration: duration)
             let moveUp   = SKAction.moveBy(x: 0, y:  zigzagDistance, duration: duration)
             action = .sequence([moveDown, moveUp])
+            
+        case 2:
+            //  Diagonal zig-zag: move down-left then up-right (or vice versa)
+            // Choose randomly whether to start down-left/up-right or down-right/up-left
+            let startDownLeft = Bool.random()
+            if startDownLeft {
+                let faceDownLeft  = SKAction.run {
+                    self.node.xScale = abs(self.node.xScale)
+                    // If you want to flip vertically, adjust yScale here; otherwise leave yScale positive
+                }
+                let faceUpRight   = SKAction.run {
+                    self.node.xScale = -abs(self.node.xScale)
+                }
+                let moveDownLeft  = SKAction.moveBy(x: -zigzagDistance, y: -zigzagDistance, duration: duration)
+                let moveUpRight   = SKAction.moveBy(x:  zigzagDistance, y:  zigzagDistance, duration: duration)
+                action = .sequence([
+                    faceDownLeft,
+                    moveDownLeft,
+                    faceUpRight,
+                    moveUpRight
+                ])
+            } else {
+                let faceDownRight = SKAction.run {
+                    self.node.xScale = -abs(self.node.xScale)
+                }
+                let faceUpLeft    = SKAction.run {
+                    self.node.xScale = abs(self.node.xScale)
+                }
+                let moveDownRight = SKAction.moveBy(x: zigzagDistance, y: -zigzagDistance, duration: duration)
+                let moveUpLeft    = SKAction.moveBy(x: -zigzagDistance, y: zigzagDistance, duration: duration)
+                action = .sequence([
+                    faceDownRight,
+                    moveDownRight,
+                    faceUpLeft,
+                    moveUpLeft
+                ])
+            }
+            
+        default:
+            // Fallback to horizontal if something goes wrong
+            let faceRight = SKAction.run { self.node.xScale = abs(self.node.xScale) }
+            let faceLeft  = SKAction.run { self.node.xScale = -abs(self.node.xScale) }
+            action = .sequence([
+                faceRight,
+                .moveBy(x: -zigzagDistance, y: 0, duration: duration),
+                faceLeft,
+                .moveBy(x: zigzagDistance, y: 0, duration: duration)
+            ])
         }
-
+        
         // Loop the action forever
         node.run(.repeatForever(action))
     }

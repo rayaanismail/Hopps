@@ -16,7 +16,7 @@ final class EnemySystem: SKNode, GameSystem {
     var zigzagTimer: TimeInterval = 0
 
     /// Maximum allowed zig-zag enemies at once.
-    let maxZigzagEnemies = 3
+    let maxZigzagEnemies = 2
     /// Interval (in seconds) between zig-zag spawns.
     let zigzagInterval: TimeInterval = 2.0
 
