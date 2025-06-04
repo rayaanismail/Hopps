@@ -116,6 +116,9 @@ struct SettingsView: View {
                                 .padding([.horizontal, .vertical], 8)
                                 .background(.customWoodBrown)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .onChange(of: vm.sfxEnabled) { oldValue, newValue in
+                                    vm.saveSettings()
+                                }
                                 
                                 
                         }
