@@ -18,20 +18,12 @@ extension GameScene {
         eventSystem?.startGame()
         platformSystem?.resetPlatformData()
         backgroundSystem?.resetBackground()
-        GameCenterManager.shared.submitScore(Int(getAltitude()))
+        GameCenterManager.shared.submitScore(Int(fetchAltitude()))
         
         touchEnabled = UserDefaults.standard.bool(forKey: "touchEnabled")
         vibrationEnabled = UserDefaults.standard.bool(forKey: "vibrationEnabled")
         sfxEnabled = UserDefaults.standard.bool(forKey: "sfxEnabled")
         
-    }
-    
-    func getScene() -> GameScene {
-        return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
-    }
-    
-    func getAltitude() -> CGFloat {
-        getScene().fetchAltitude()
     }
 }
 
