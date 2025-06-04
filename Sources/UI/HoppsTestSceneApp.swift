@@ -11,7 +11,7 @@ import SwiftUI
 struct HoppsTestSceneApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationHub()
+            NavigationHub(vm: NavigationHubViewModel())
         }
     }
     
@@ -22,6 +22,7 @@ struct HoppsTestSceneApp: App {
         UserDefaults.standard.register(defaults: ["sfxEnabled": true])
         
         GameCenterManager.shared.authenticateLocalPlayer()
+        
 
     }
 }

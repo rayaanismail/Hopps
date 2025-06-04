@@ -22,7 +22,7 @@ class NavigationHubViewModel {
         case mainMenu, settings, gameOverlay, skins
     }
     
-    init() {
+    init(scene: GameScene = GameScene()) {
         self.touchEnabled = UserDefaults.standard.bool(forKey: "touchEnabled")
         self.vibrationEnabled = UserDefaults.standard.bool(forKey: "vibrationEnabled")
         self.sfxEnabled = UserDefaults.standard.bool(forKey: "sfxEnabled")
@@ -30,12 +30,13 @@ class NavigationHubViewModel {
 }
 
 struct NavigationHub: View {
-    @State var vm = NavigationHubViewModel()
+    @State var vm: NavigationHubViewModel
+    
     
     var body: some View {
         ZStack {
             switch vm.currentView {
-            
+                
             case .mainMenu:
                 MainMenuView(vm: vm)
             case .settings:
@@ -43,18 +44,24 @@ struct NavigationHub: View {
             case .gameOverlay:
                 GameOverlay(vm: vm)
                 
-            
+                
                 
             default:
                 MainMenuView(vm: vm)
             }
         }
         .animation(.easeIn, value: vm.currentView)
-     
-        }
+        
     }
+}
 
 
 #Preview {
-    NavigationHub()
+    var scene: GameScene = {
+        let scene = GameScene()
+        scene.scaleMode = .resizeFill
+        return scene
+    }()
+    
+    NavigationHub(vm: NavigationHubViewModel(scene: scene))
 }
