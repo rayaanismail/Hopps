@@ -26,6 +26,7 @@ extension EventSystem {
                 await cage.run(AnimationManager.launchAnimation)
                 character.physicsBody?.isDynamic = true
                 getScene().playerSystem?.jump(velocity: 8000)
+                getHapticEngine().playCannonHaptic()
                 await cage.run(AnimationManager.launchEffectAnimation)
                 
                 getScene().movement(.unpause)

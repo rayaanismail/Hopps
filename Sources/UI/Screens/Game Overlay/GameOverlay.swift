@@ -14,18 +14,18 @@ struct GameOverlay: View {
     @State var scene: GameScene = {
         let newScene = GameScene()
         newScene.scaleMode = .resizeFill
+        print("Scene created")
         return newScene
     }()
     
     
     init(vm: NavigationHubViewModel) {
         self.vm = vm
-        self.scene = scene
     }
     
     var body: some View {
         ZStack {
-            SpriteView(scene: scene, debugOptions: .showsPhysics)
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
                 .disabled(gameState.isPaused || gameState.isGameOver)
                 .onAppear {
@@ -53,14 +53,6 @@ struct GameOverlay: View {
             }
             
         }
-    }
-    
-    func makeScene() -> GameScene {
-        let newScene = GameScene()
-        newScene.scaleMode = .resizeFill
-//        resetGameState()
-        newScene.gameState = gameState
-        return newScene
     }
     
     func setPauseState(_ input: Bool) {

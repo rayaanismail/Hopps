@@ -24,6 +24,7 @@ extension GameScene {
         eventSystem?.startGame()
 //        3. Reset platforms back to their threshold
         platformSystem?.resetPlatformData()
+        backgroundSystem?.resetBackground()
 //        4. Reset enemies, reinit?
 //        5. Restart cannon animation, and apply impulse.
 //        6. On death, allow UI to handle transitioning.

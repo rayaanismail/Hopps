@@ -13,4 +13,5 @@ class GameState: ObservableObject {
     @Published var isPaused = false
     @Published var isGameOver = false
     @Published var score = 0
+    @Published var scenesCreated = 0
 }

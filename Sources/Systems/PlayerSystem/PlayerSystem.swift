@@ -119,4 +119,12 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         
     }
     
+    func jumpAnimation() {
+        Task {
+            await character.run(AnimationManager.jumpAnimation)
+//            character.physicsBody?.applyImpulse(CGVector(dx: 0, dy: getScene().getJumpVelocity()))
+        }
+        
+        
+    }
 }
