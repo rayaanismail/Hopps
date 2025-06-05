@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     // Shared game systems
@@ -69,19 +70,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let pt = touches.first?.location(in: self) else { return }
-        touchSystems.forEach { $0.handleTouch(at: pt, type: .began) }
-    }
+            guard UserDefaults.standard.bool(forKey: "touchEnabled"),
+                  let pt = touches.first?.location(in: self) else { return }
+            touchSystems.forEach { $0.handleTouch(at: pt, type: .began) }
+        }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let pt = touches.first?.location(in: self) else { return }
-        touchSystems.forEach { $0.handleTouch(at: pt, type: .moved) }
-    }
+            guard UserDefaults.standard.bool(forKey: "touchEnabled"),
+                  let pt = touches.first?.location(in: self) else { return }
+            touchSystems.forEach { $0.handleTouch(at: pt, type: .moved) }
+        }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let pt = touches.first?.location(in: self) else { return }
-        touchSystems.forEach { $0.handleTouch(at: pt, type: .ended) }
-    }
+           guard UserDefaults.standard.bool(forKey: "touchEnabled"),
+                 let pt = touches.first?.location(in: self) else { return }
+           touchSystems.forEach { $0.handleTouch(at: pt, type: .ended) }
+       }
 }
 
 
