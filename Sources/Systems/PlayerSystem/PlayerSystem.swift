@@ -36,11 +36,11 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     var maxTilt: CGFloat = CGFloat(GLKMathDegreesToRadians(15))
     var tiltSmoothing: CGFloat = 0.125 // easing factor
     var previousDx: CGFloat = 0 // Remember velocity to smooth tilt more
-    private var maxVelocity: CGFloat = 300
+    var maxVelocity: CGFloat = 300
     
     var previousY: CGFloat = 0
     
-    // MARK: – NEW “tilt” support
+    // MARK: – Tilt support
         let motionManager = CMMotionManager()
        /// Read directly from UserDefaults instead of a separate property;
        /// “touchEnabled == true” means use touch, otherwise use tilt.
@@ -151,7 +151,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
 
             body.velocity.dx = newVx
 
-            // Optionally, you can still let gravity/vertical velocity happen:
+            // Optionally, we can still let gravity/vertical velocity happen:
             // body.velocity.dy stays untouched.
         }
     
