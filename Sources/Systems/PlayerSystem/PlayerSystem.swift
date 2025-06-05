@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import CoreMotion
 
 struct PlayerConfig {
     var size: CGSize
@@ -39,6 +40,14 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     
     var previousY: CGFloat = 0
     
+    // MARK: – NEW “tilt” support
+        let motionManager = CMMotionManager()
+       /// Read directly from UserDefaults instead of a separate property;
+       /// “touchEnabled == true” means use touch, otherwise use tilt.
+        var isTouchMode: Bool {
+           UserDefaults.standard.bool(forKey: "touchEnabled")
+       }
+    
     // Simply configures variables
     init(config: PlayerConfig) {
         self.config = config
@@ -49,6 +58,15 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         lastPosition = character.position
         super.init()
         character = playerPhysics(&character)
+        
+        if motionManager.isDeviceMotionAvailable {
+                   motionManager.deviceMotionUpdateInterval = 1.0 / 60.0
+                   motionManager.startDeviceMotionUpdates()
+               }
+               else if motionManager.isAccelerometerAvailable {
+                   motionManager.accelerometerUpdateInterval = 1.0 / 60.0
+                   motionManager.startAccelerometerUpdates()
+               }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,7 +75,13 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     
     // Updates per frame
     func update(deltaTime: TimeInterval) {
-        movePlayer(deltaTime: deltaTime)
+        if isTouchMode {
+                   // existing touch‐based movement
+                   movePlayer(deltaTime: deltaTime)
+               } else {
+                   //  tilt‐based horizontal movement
+                   applyTiltMovement(deltaTime: deltaTime)
+               }
         
         
         changeMovementState()
@@ -100,6 +124,36 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         character.physicsBody?.collisionBitMask = PhysicsCategory.bounce
         return character
     }
+    
+    func applyTiltMovement(deltaTime: TimeInterval) {
+            guard let body = character.physicsBody else { return }
+
+            // Prefer DeviceMotion.attitude.roll if available; otherwise fallback to accelerometer.x
+            var tiltX: Double = 0
+
+            if let deviceMotion = motionManager.deviceMotion {
+                // roll is in radians around the device’s longitudinal axis
+                tiltX = deviceMotion.attitude.roll
+            } else if let accelData = motionManager.accelerometerData {
+                tiltX = accelData.acceleration.x
+            }
+
+            // Map “tiltX” (radians or raw accel) into a suitable velocity
+            // Adjust “tiltMultiplier” until it feels natural
+            let tiltMultiplier: CGFloat = 500
+            let dx = CGFloat(tiltX) * tiltMultiplier
+
+            // Set horizontal velocity, but clamp to maxVelocity:
+            var newVx = dx
+            if abs(newVx) > maxVelocity {
+                newVx = (newVx > 0 ? 1 : -1) * maxVelocity
+            }
+
+            body.velocity.dx = newVx
+
+            // Optionally, you can still let gravity/vertical velocity happen:
+            // body.velocity.dy stays untouched.
+        }
     
     func clampSpeed(_ velocity: CGFloat) {
         guard let body = character.physicsBody else { return }
