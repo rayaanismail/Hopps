@@ -21,7 +21,7 @@ extension SKColor {
 
 class BackgroundSystem: SKNode, GameSystem {
     // Properties
-    private let config: BackgroundConfig
+    let config: BackgroundConfig
     private let baseSky: SKSpriteNode
     let gradientFade: SKSpriteNode
     private let layer1: SKSpriteNode
@@ -29,7 +29,7 @@ class BackgroundSystem: SKNode, GameSystem {
     private let layer3: SKSpriteNode
     private var layers: [SKSpriteNode] = []
     
-    private var cloudLayers: [SKSpriteNode] = []
+    var cloudLayers: [SKSpriteNode] = []
     private let cloudStageLayer: SKSpriteNode
     
     private var testNode = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
@@ -193,4 +193,8 @@ class BackgroundSystem: SKNode, GameSystem {
     func followCamera() {
         self.position = (scene as? GameScene)?.cameraSystem?.cameraNode.position ?? CGPoint.zero
     }
+    
+    
 }
+
+
