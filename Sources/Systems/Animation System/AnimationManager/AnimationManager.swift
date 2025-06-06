@@ -23,12 +23,12 @@ final class AnimationManager {
         return SKAction.animate(with: frames, timePerFrame: 0.18)
     }()
     
-    static let jumpAnimation: SKAction = {
-        var frames = getSpritesheet(imageNamed: "HoppsJumpAnimation", rows: 1, columns: 4)
-        frames.append(SKTexture(image: .hStanding))
-        let animation = SKAction.animate(with: frames, timePerFrame: 0.13)
-        return animation
-    }()
+//    static let jumpAnimation: SKAction = {
+//        var frames = getSpritesheet(imageNamed: "HoppsJumpAnimation", rows: 1, columns: 4)
+//        frames.append(SKTexture(image: .hStanding))
+//        let animation = SKAction.animate(with: frames, timePerFrame: 0.13)
+//        return animation
+//    }()
     
     /// The initial texture for the cage break animation spritesheet
     static let launchTexture: SKTexture = {
@@ -37,8 +37,13 @@ final class AnimationManager {
     }()
     /// Animation that flops ears down simulating vertical ascent
     static let ascendingAnimation: SKAction = {
-        let frame = getSpritesheet(imageNamed: "AscendingAnimation", rows: 1, columns: 4)
-        return SKAction.animate(with: frame, timePerFrame: 0.049)
+        let frames = getSpritesheet(imageNamed: "AscendingAnimation", rows: 1, columns: 4)
+        return SKAction.animate(with: frames, timePerFrame: 0.049)
+    }()
+    
+    static let jumpAnimation: SKAction = {
+        let sheets = getSpritesheet(imageNamed: "JumpAnimation", rows: 1, columns: 5)
+        return SKAction.animate(with: sheets, timePerFrame: 0.10)
     }()
     /// Animation that flops ears and opens arms for vertical descent
     static let descendingAnimation: SKAction = {

@@ -15,7 +15,8 @@ extension PlayerSystem {
     /// Switches animations based on the players movement
     func changeMovementState() {
         guard let dy = character.physicsBody?.velocity.dy else { return }
-        
+        /// Do not change state until jump animation is finished
+        guard character.action(forKey: "jump") == nil else { return }
         /// Only applies animation when state changes
         let newState: PlayerAnimationState
         if dy > config.idleVelocityFloor {
