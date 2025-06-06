@@ -49,6 +49,8 @@ struct GameOverlay: View {
                 DeathScreenView(vm: $vm, scene: $scene, gameState: gameState)
                     .onAppear {
                         setPauseState(true)
+                        GameCenterManager.shared.submitScore(Int(getAltitude()))
+                        
                     }
             }
             
@@ -58,6 +60,10 @@ struct GameOverlay: View {
     func setPauseState(_ input: Bool) {
         gameState.isPaused = input
         scene.isPaused = input
+    }
+    
+    func getAltitude() -> CGFloat {
+        scene.fetchAltitude()
     }
     
 }

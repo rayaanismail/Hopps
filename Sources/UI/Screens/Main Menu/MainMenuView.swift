@@ -20,7 +20,10 @@ struct MainMenuView: View {
                 HStack {
                     Button {
                         // Ensure the player is authenticated, then show the GC UI
+                        // Add a print statement so that we can see if the view is presented
+                        GameCenterManager.shared.authenticateLocalPlayer()
                         GameCenterManager.shared.showLeaderboard()
+                        
                     } label: {
                         Image(.leaderboardTrophy)
                             .scaleEffect(vm.topBarIconScale)

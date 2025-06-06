@@ -16,7 +16,7 @@ final class EnemySystem: SKNode, GameSystem {
     var zigzagTimer: TimeInterval = 0
 
     /// Maximum allowed zig-zag enemies at once.
-    let maxZigzagEnemies = 5
+    let maxZigzagEnemies = 2
     /// Interval (in seconds) between zig-zag spawns.
     let zigzagInterval: TimeInterval = 2.0
 
@@ -30,7 +30,7 @@ final class EnemySystem: SKNode, GameSystem {
     func update(deltaTime: TimeInterval) {
         // Ensure we have a GameScene and its SKView.
         guard let gs = scene as? GameScene else { return }
-        return
+        
 
         // ─── Tracker spawning and update ─────────────────────
 //        if tracker == nil {

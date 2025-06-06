@@ -19,12 +19,8 @@ extension GameScene {
         platformSystem?.resetPlatformData()
         backgroundSystem?.resetBackground()
         GameCenterManager.shared.submitScore(Int(fetchAltitude()))
-        
+      
         touchEnabled = UserDefaults.standard.bool(forKey: "touchEnabled")
         vibrationEnabled = UserDefaults.standard.bool(forKey: "vibrationEnabled")
         sfxEnabled = UserDefaults.standard.bool(forKey: "sfxEnabled")
-        
     }
-}
-
-

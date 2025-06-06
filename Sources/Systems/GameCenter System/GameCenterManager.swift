@@ -29,7 +29,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             } else if let error = error {
                 print("Game Center authentication failed: \(error.localizedDescription)")
             } else {
-//                print("Game Center authentication failed for unknown reasons.")
+                print("Game Center authentication failed for unknown reasons.")
             }
         }
     }
