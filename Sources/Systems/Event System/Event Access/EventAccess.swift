@@ -13,4 +13,8 @@ extension EventSystem {
     func getScene() -> GameScene {
         return (scene as? GameScene) ?? GameScene(size: CGSize.zero)
     }
+    
+    func getHapticEngine() -> HapticSystem {
+        getScene().hapticSystem ?? HapticSystem()
+    }
 }
