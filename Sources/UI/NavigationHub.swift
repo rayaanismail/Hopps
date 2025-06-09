@@ -17,6 +17,7 @@ class NavigationHubViewModel {
     var touchEnabled: Bool
     var vibrationEnabled: Bool
     var sfxEnabled: Bool
+    var scene: GameScene? = nil
     
     enum UIView {
         case mainMenu, settings, gameOverlay, skins

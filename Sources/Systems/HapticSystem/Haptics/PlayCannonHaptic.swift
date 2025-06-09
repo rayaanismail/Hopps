@@ -70,7 +70,6 @@ extension HapticSystem {
             let pattern = try CHHapticPattern(events: [punch, body, echo], parameterCurves: [decayCurve, sharpnessCurve])
             let player = try engine.makePlayer(with: pattern)
             try player.start(atTime: 0)
-            print("BOOM")
         } catch {
             print("Cannon haptic playback error: \(error)")
         }
