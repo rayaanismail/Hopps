@@ -25,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemySystem:      EnemySystem?
     var eventSystem:      EventSystem?
     var hapticSystem:     HapticSystem?
+    var soundSystem:      SoundSystem?
     
     // Settings
     var touchEnabled: Bool = UserDefaults.standard.bool(forKey: "touchEnabled")
@@ -39,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy  = EnemySystem()
         let event  = EventSystem(config: EventConfig())
         let haptic = HapticSystem()
+        let sound = SoundSystem(config: SoundConfig())
 
         // 2. Assign to your properties (all now internal)
         backgroundSystem = bg
@@ -48,9 +50,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemySystem      = enemy
         eventSystem      = event
         hapticSystem     = haptic
+        soundSystem      = sound
         
         // 3. Build the shared array and set them up
-        systems = [cam, bg, player, plat, enemy, event, haptic]
+        systems = [cam, bg, player, plat, enemy, event, haptic, sound]
         systems.forEach { $0.setup(in: self) }
 
         // 4. Touch‐controllable subslice
@@ -89,6 +92,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                  let pt = touches.first?.location(in: self) else { return }
            touchSystems.forEach { $0.handleTouch(at: pt, type: .ended) }
        }
+    
+    deinit {
+        print("GameScene deinited")
+    }
 }
 
 

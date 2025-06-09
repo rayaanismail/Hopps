@@ -28,7 +28,7 @@ extension GameScene {
         // bounce logic
         if firstBody.categoryBitMask == PhysicsCategory.character
             && secondBody.categoryBitMask == PhysicsCategory.bounce {
-            firstBody.velocity = CGVectorMake(0, 0)
+            firstBody.velocity = CGVectorMake(0, 1)
             firstBody.applyImpulse(CGVector(dx: 0, dy: getJumpVelocity()))
             hapticSystem?.triggerPlatformImpact(at: secondBody.node?.position ?? CGPoint.zero)
             
