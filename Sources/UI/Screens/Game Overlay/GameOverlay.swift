@@ -14,13 +14,24 @@ struct GameOverlay: View {
     @State var scene: GameScene = {
         let newScene = GameScene()
         newScene.scaleMode = .resizeFill
-        print("Scene created")
         return newScene
     }()
     
     
     init(vm: NavigationHubViewModel) {
         self.vm = vm
+        
+//        if let unwrappedScene = vm.scene {
+//            self.scene = unwrappedScene
+//            self.scene.restart()
+//            self.scene.gameState = gameState
+//        } else {
+//            vm.scene?.gameState = nil
+//            let newScene = GameScene()
+//            newScene.scaleMode = .resizeFill
+//            self.scene = newScene
+//            vm.scene = self.scene
+//        }
     }
     
     var body: some View {
@@ -60,6 +71,7 @@ struct GameOverlay: View {
     func setPauseState(_ input: Bool) {
         gameState.isPaused = input
         scene.isPaused = input
+        scene.soundSystem?.pausePersistentAudio(true)
     }
     
     func getAltitude() -> CGFloat {

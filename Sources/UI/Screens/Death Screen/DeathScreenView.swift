@@ -63,6 +63,8 @@ struct DeathScreenView: View {
               gameState.isPaused = true
               scene.wrappedValue.isPaused = true
               vm.wrappedValue.currentView = .mainMenu
+              print("Went home")
+              scene.wrappedValue.prepareDeinit()
           }
         
       }
