@@ -23,10 +23,13 @@ struct PauseScreenView: View {
                 WoodButton(title: "Resume") {
                     gameState.isPaused = false
                     scene.isPaused.wrappedValue = false
+                    scene.wrappedValue.soundSystem?.pausePersistentAudio(false)
+                    
                 }
                 WoodButton(title: "Home") {
                     vm.wrappedValue.currentView = .mainMenu
                     gameState.isPaused = true
+                    scene.wrappedValue.prepareDeinit()
                 }
             }
         }

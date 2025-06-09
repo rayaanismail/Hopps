@@ -55,14 +55,17 @@ struct DeathScreenView: View {
           .resizable()
           .frame(width: 300, height: 300)
           
-          WoodButton(title: "Retry") {
-              UIrestart()
-          }
+//          WoodButton(title: "Retry") {
+//              UIrestart()
+//              scene.wrappedValue.restart()
+//          }
           WoodButton(title: "Home") {
               UIrestart()
               gameState.isPaused = true
               scene.wrappedValue.isPaused = true
               vm.wrappedValue.currentView = .mainMenu
+              print("Went home")
+              scene.wrappedValue.prepareDeinit()
           }
         
       }

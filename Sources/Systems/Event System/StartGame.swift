@@ -24,10 +24,12 @@ extension EventSystem {
             Task {
                 try await Task.sleep(for: .seconds(0.5))
                 await cage.run(AnimationManager.launchAnimation)
+                getSoundSystem().playCannonSFX()
                 character.physicsBody?.isDynamic = true
                 getScene().playerSystem?.jump(velocity: 8000)
                 getHapticEngine().playCannonHaptic()
                 await cage.run(AnimationManager.launchEffectAnimation)
+                getSoundSystem().playBackgroundTheme()
                 
                 getScene().movement(.unpause)
             }

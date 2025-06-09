@@ -63,7 +63,7 @@ extension PlatformSystem {
         // Loops through the platforms
         for i in platforms.indices {
             var platform = platforms[i]
-            platform.size = CGSize(width: 100, height: 50)
+//            platform.size = CGSize(width: 100, height: 50)
             
             // If platforms are below the player...
             if platform.position.y < characterY - viewHeight {
@@ -74,8 +74,8 @@ extension PlatformSystem {
                 point.y = newY
                 platform.removeAllActions()
                 platform.position = point
-                
-                platform.texture = SKTexture(imageNamed: progressionManager.currentStage.randomTexture)
+                let randomTexture = SKTexture(imageNamed: progressionManager.currentStage.randomTexture)
+                platform.texture = randomTexture
                 
                 // Inside the loop, update for the next platform in the array
                 highestPlatformY += config.platformDistance

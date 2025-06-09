@@ -24,7 +24,7 @@ class EventSystem: SKNode, GameSystem {
     
     func update(deltaTime: TimeInterval) {
         startGame()
-//        debugTeleport(y: 100000, yForce: 10000, debugState: .on)
+//        debugTeleport(y: 21000, yForce: 10000, debugState: .on)
     }
     
     func setup(in scene: SKScene) {
