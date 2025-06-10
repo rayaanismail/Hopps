@@ -11,7 +11,7 @@ extension GameScene {
     func prepareDeinit() {
         soundSystem?.deallocatePersistentAudio()
         systems.forEach { system in
-        var node = system as! SKNode
+            let node = system as! SKNode
             node.removeAllActions()
             node.removeAllChildren()
             node.removeFromParent()
