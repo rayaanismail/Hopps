@@ -21,7 +21,6 @@ class SoundSystem: SKNode, GameSystem {
     var gameTime: GameTime {
         getScene().gameTime
     }
-    let playState = false
     
     init(config: SoundConfig) {
         self.config = config
@@ -33,8 +32,9 @@ class SoundSystem: SKNode, GameSystem {
     }
     
     func update(deltaTime: TimeInterval) {
+        
         if gameTime.elapsedTime == 0 {
-//            print("Elapsed time is zero playing ambience and airdrag")
+            //            print("Elapsed time is zero playing ambience and airdrag")
             backgroundMusicPlayer = nil
             ambiencePlayer = nil
             playAirDrag()
@@ -42,7 +42,7 @@ class SoundSystem: SKNode, GameSystem {
             
         } else {
             updateVelocityAudio()
-//            transitionAmbienceVolumes()
+            //            transitionAmbienceVolumes()
             pausePersistentAudio(false)
         }
         
@@ -54,19 +54,18 @@ class SoundSystem: SKNode, GameSystem {
         playTreeAmbience()
         playCloudAmbience()
         startAmbienceTimer()
-        
     }
     /// De-allocates and undoes the setup required for all playback players.
     func deallocatePersistentAudio() {
         airDragPlayer?.stop()
         airDragPlayer = nil
-//        print("Players before stopping: \(players)")
+        //        print("Players before stopping: \(players)")
         for i in 0..<players.count {
             players[i]?.stop()
             players[i] = nil
         }
         resetPersistentAudio()
-//        print("Players after stopping: \(players)")
+        //        print("Players after stopping: \(players)")
     }
     /// Pauses persistent audio and saves the progress
     func pausePersistentAudio(_ state: Bool) {
@@ -106,7 +105,17 @@ class SoundSystem: SKNode, GameSystem {
         ambienceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
             self?.transitionAmbienceVolumes()
         }
+        /// Pauses persistent audio and saves the progress
+        func pausePersistentAudio(_ state: Bool) {
+            if state {
+                backgroundMusicPlayer?.pause()
+                effectPlayer?.pause()
+            } else {
+                backgroundMusicPlayer?.play()
+                effectPlayer?.play()
+            }
+        }
     }
+    
+    
 }
-
-
