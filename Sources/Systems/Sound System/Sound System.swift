@@ -32,7 +32,7 @@ class SoundSystem: SKNode, GameSystem {
     }
     
     func update(deltaTime: TimeInterval) {
-        
+
         if gameTime.elapsedTime == 0 {
             //            print("Elapsed time is zero playing ambience and airdrag")
             backgroundMusicPlayer = nil
@@ -104,6 +104,17 @@ class SoundSystem: SKNode, GameSystem {
         ambienceTimer?.invalidate() // Just in case
         ambienceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
             self?.transitionAmbienceVolumes()
+        backgroundMusicPlayer?.stop()
+        effectPlayer?.stop()
+    }
+    /// Pauses persistent audio and saves the progress
+    func pausePersistentAudio(_ state: Bool) {
+        if state {
+            backgroundMusicPlayer?.pause()
+            effectPlayer?.pause()
+        } else {
+            backgroundMusicPlayer?.play()
+            effectPlayer?.play()
         }
         /// Pauses persistent audio and saves the progress
         func pausePersistentAudio(_ state: Bool) {
