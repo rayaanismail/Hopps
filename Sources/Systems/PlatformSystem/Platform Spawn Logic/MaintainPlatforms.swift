@@ -75,7 +75,7 @@ extension PlatformSystem {
                 platform.removeAllActions()
                 platform.position = point
                 let randomTexture = SKTexture(imageNamed: progressionManager.currentStage.randomTexture)
-                platform.run(SKAction.setTexture(randomTexture, resize: true))
+                platform.texture = randomTexture
                 
                 // Inside the loop, update for the next platform in the array
                 highestPlatformY += config.platformDistance

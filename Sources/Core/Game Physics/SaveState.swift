@@ -13,6 +13,11 @@ extension GameScene {
     func saveState(gameOver: Bool) {
         gameState?.score = Int(fetchAltitude())
         gameState?.isGameOver = gameOver
+//        if gameState?.isPaused ?? false {
+//            soundSystem?.pausePersistentAudio(true)
+//        }
         gameState?.isPaused = isPaused
+        
+        
     }
 }

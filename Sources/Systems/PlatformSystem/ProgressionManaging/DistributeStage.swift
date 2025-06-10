@@ -14,6 +14,7 @@ extension PlatformSystem {
         let altitude = getAltitude()
         getScene().changeGravity(progressionManager.currentStage.gravity * -9.81)
         if altitude > progressionManager.currentStageUpperBound {
+            
             progressionManager.setCurrentStage(altitude)
             let stage = progressionManager.currentStage
             jumpFactor = stage.jumpHeightMultiplier
