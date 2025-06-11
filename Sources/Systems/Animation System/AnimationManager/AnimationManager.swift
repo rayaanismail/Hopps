@@ -62,7 +62,7 @@ final class AnimationManager {
     }()
     
     static let equipSpaceSuitAnimation: SKAction = {
-       let sheet = getSpritesheet(imageNamed: "EquipSpaceSuitAnimation", rows: 1, columns: 6)
+       let sheet = getSpritesheet(imageNamed: "equipSpaceSuitAnimation", rows: 1, columns: 6)
         return SKAction.animate(with: sheet, timePerFrame: 0.25)
     }()
     static let alienAnimation: SKAction = {

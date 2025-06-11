@@ -102,25 +102,36 @@ struct SettingsView: View {
                             .frame(maxWidth: 190)
                         }
                         
-                        VStack {
-                            Text("SFX")
-                                .font(.custom("Silom", size: 24))
-                                .foregroundStyle(.customWoodBrown)
-                                .padding(.horizontal, 10)
+                        Button {
+                            vm.sfxEnabled.toggle()
+                            vm.saveSettings()
+                        } label: {
+                            VStack {
+                                Text("SFX")
+                                    .font(.custom("Silom", size: 24))
+                                    .foregroundStyle(.customWoodBrown)
+                                    .padding(.horizontal, 10)
+                                    .background(.white.opacity(0.4))
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                
+                                ImageToggleLabel(onState:
+                                                    "SoundOn",
+                                                 offState:
+                                                    "SoundOff",
+                                                 toggle:
+                                                    $vm.sfxEnabled)
+                                .scaleEffect(4)
+                                Text(vm.sfxEnabled ?
+                                     "Sound On" : "Sound Off")
+                                .padding(5)
                                 .background(.white.opacity(0.4))
+                                .foregroundStyle(.customWoodBrown)
+                                .bold()
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
+                                
+                            }
                             
-                            Toggle("Toggle", isOn: $vm.sfxEnabled)
-                                .frame(maxWidth: 150)
-                                .foregroundStyle(.white)
-                                .padding([.horizontal, .vertical], 8)
-                                .background(.customWoodBrown)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .onChange(of: vm.sfxEnabled) { oldValue, newValue in
-                                    vm.saveSettings()
-                                }
-                                
-                                
+                        }
                         }
                         .padding(.top, 20)
                     }
@@ -134,7 +145,7 @@ struct SettingsView: View {
             /// End of Screen Contents
         }
     }
-}
+
 
 #Preview {
     SettingsView(vm: NavigationHubViewModel())
