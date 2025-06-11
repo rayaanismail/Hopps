@@ -41,6 +41,11 @@ final class AnimationManager {
         return SKAction.animate(with: frames, timePerFrame: 0.049)
     }()
     
+    static let ascendingSpaceAnimation: SKAction = {
+        let frames = getSpritesheet(imageNamed: "AscendSpaceAnimation", rows: 1, columns: 4)
+        return SKAction.animate(with: frames, timePerFrame: 0.049)
+    }()
+    
     static let jumpAnimation: SKAction = {
         let sheets = getSpritesheet(imageNamed: "JumpAnimation", rows: 1, columns: 5)
         return SKAction.animate(with: sheets, timePerFrame: 0.10)
@@ -49,6 +54,20 @@ final class AnimationManager {
     static let descendingAnimation: SKAction = {
         let sheet = getSpritesheet(imageNamed: "DescendingAnimation", rows: 1, columns: 3)
         return SKAction.animate(with: sheet, timePerFrame: 0.065)
+    }()
+    
+    static let descendingSpaceAnimation: SKAction = {
+        let sheet = getSpritesheet(imageNamed: "DescendSpaceAnimation", rows: 1, columns: 3)
+        return SKAction.animate(with: sheet, timePerFrame: 0.065)
+    }()
+    
+    static let equipSpaceSuitAnimation: SKAction = {
+       let sheet = getSpritesheet(imageNamed: "EquipSpaceSuitAnimation", rows: 1, columns: 6)
+        return SKAction.animate(with: sheet, timePerFrame: 0.25)
+    }()
+    static let alienAnimation: SKAction = {
+        let sheet = getSpritesheet(imageNamed: "AlienAnimation", rows: 1, columns: 8)
+        return SKAction.animate(with: sheet, timePerFrame: 0.05)
     }()
     /// Animation that flaps the eagles wings to show flying
     static let trackerAnimation: SKAction = {

@@ -6,7 +6,7 @@
 //
 
 enum ZigzagAnimationState {
-    case gliding
+    case gliding, floating
 }
 
 import SpriteKit
@@ -44,7 +44,14 @@ final class ZigzagEnemy: EnemyProtocol {
     ///   - scene: The game scene (used to compute horizontal constraints).
     func spawn(at position: CGPoint, in scene: GameScene) {
         node.position = position
-        applyAnimation(for: .gliding)
+        if scene.fetchAltitude() < 101000 {
+            applyAnimation(for: .gliding)
+        } else {
+            node.setScale(0.2)
+            node.yScale *= 1.7
+            applyAnimation(for: .floating)
+        }
+        
         constrainX(in: scene)    // Keep within horizontal screen bounds
         startZigzag()            // Begin repeating zig-zag action
     }
@@ -150,6 +157,14 @@ final class ZigzagEnemy: EnemyProtocol {
         switch state {
         case .gliding:
             node.run(.repeatForever(AnimationManager.zigzagAnimation), withKey: "gliding")
+        case .floating:
+            node.run(.repeatForever(AnimationManager.alienAnimation), withKey: "floating")
         }
+    }
+    
+    func convertToAlien() {
+        node.run(.repeatForever(AnimationManager.alienAnimation), withKey: "floating")
+        node.setScale(0.2)
+        node.yScale *= 1.7
     }
 }

@@ -94,5 +94,11 @@ final class EnemySystem: SKNode, GameSystem {
 
         return CGPoint(x: x, y: y)
     }
+    
+    func updateEnemyType(_ state: ZigzagAnimationState) {
+        for enemy in zigzags {
+            enemy.convertToAlien()
+        }
+    }
 }
 

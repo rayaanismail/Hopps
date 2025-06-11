@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        }
     
     deinit {
-        print("\n")
+        
     }
 }
 

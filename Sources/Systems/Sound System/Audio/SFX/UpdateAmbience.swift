@@ -48,9 +48,7 @@ extension SoundSystem {
         let maximumElevation = minimumElevation + config.transitionDistance
 //        print("\(getScene().fetchAltitude()) :><: \(maximumElevation)")
         guard getScene().fetchAltitude() < maximumElevation else {
-            print("Step 1")
             if ambiencePlayer?.volume != 0 && ambiencePlayer2?.volume != config.ambienceVolume {
-                print("Definitely needs fixing.")
                 ambiencePlayer?.volume = 0
                 
                 ambiencePlayer2?.volume = config.ambienceVolume

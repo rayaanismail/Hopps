@@ -26,6 +26,7 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
     }
     var character: SKSpriteNode
     var movementState: PlayerAnimationState = .idle
+    var inSpace: Bool = false
     
     var lastPosition: CGPoint = CGPoint.zero
     
@@ -180,5 +181,10 @@ class PlayerSystem: SKNode, GameSystem, TouchControllable {
         }
         
         
+    }
+    
+    func prepareForSpace() {
+        character.run(AnimationManager.equipSpaceSuitAnimation, withKey: "equippingSpaceSuit")
+        inSpace = true
     }
 }
