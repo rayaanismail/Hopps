@@ -32,7 +32,7 @@ extension SoundSystem {
     
 
     func playBackgroundTheme() {
-
+        guard getSettings().sfxEnabled else { return }
         guard let url = Bundle.main.url(forResource: "BackgroundMusic1", withExtension: "mp3") else { return }
         do {
             backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
