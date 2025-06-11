@@ -20,6 +20,13 @@ extension PlatformSystem {
             jumpFactor = stage.jumpHeightMultiplier
             
             platformDistance = stage.distanceMultiplier * config.platformDistance
+            
+            if progressionManager.currentStage.range == progressionManager.stageThree.range {
+                print("YOOO")
+                getScene().enemySystem?.updateEnemyType(.floating)
+                getScene().cameraSystem?.altitudeLabel.fontColor = .white
+                getScene().playerSystem?.prepareForSpace()
+            }
         } else {
             return
         }

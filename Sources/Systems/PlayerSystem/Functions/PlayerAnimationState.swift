@@ -17,6 +17,7 @@ extension PlayerSystem {
         guard let dy = character.physicsBody?.velocity.dy else { return }
         /// Do not change state until jump animation is finished
         guard character.action(forKey: "jump") == nil else { return }
+        guard character.action(forKey: "equippingSpaceSuit") == nil else { return }
         /// Only applies animation when state changes
         let newState: PlayerAnimationState
         if dy > config.idleVelocityFloor {
@@ -29,20 +30,36 @@ extension PlayerSystem {
         
         if newState != movementState {
             movementState = newState
-            
-            switch movementState {
-            case .descending:
-                character.setScale(config.playerScale)
-                character.removeAllActions()
-                character.run(.repeatForever(AnimationManager.descendingAnimation), withKey: "descending")
-            case .ascending:
-                character.setScale(config.playerScale)
-                character.removeAllActions()
-                character.run(.repeatForever(AnimationManager.ascendingAnimation))
-            default:
-                character.setScale(config.playerScale)
-                character.removeAllActions()
-                character.texture = SKTexture(image: .hStanding)
+            if !inSpace {
+                switch movementState {
+                case .descending:
+                    character.setScale(config.playerScale)
+                    character.removeAllActions()
+                    character.run(.repeatForever(AnimationManager.descendingAnimation), withKey: "descending")
+                case .ascending:
+                    character.setScale(config.playerScale)
+                    character.removeAllActions()
+                    character.run(.repeatForever(AnimationManager.ascendingAnimation))
+                default:
+                    character.setScale(config.playerScale)
+                    character.removeAllActions()
+                    character.texture = SKTexture(image: .hStanding)
+                }
+            } else {
+                switch movementState {
+                case .descending:
+                    character.setScale(config.playerScale * 1.1)
+                    character.removeAllActions()
+                    character.run(.repeatForever(AnimationManager.descendingSpaceAnimation), withKey: "descending")
+                case .ascending:
+                    character.setScale(config.playerScale * 1.1)
+                    character.removeAllActions()
+                    character.run(.repeatForever(AnimationManager.ascendingSpaceAnimation))
+                default:
+                    character.setScale(config.playerScale * 1.1)
+                    character.removeAllActions()
+                    character.texture = SKTexture(image: .spaceStanding)
+                }
             }
         }
         
