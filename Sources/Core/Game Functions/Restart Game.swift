@@ -14,7 +14,6 @@ extension GameScene {
     func restart() {
         let currentTime = gameTime.sceneStartTime + gameTime.elapsedTime
         gameTime.reset(currentTime: currentTime)
-        
         eventSystem?.startGame()
         platformSystem?.resetPlatformData()
         backgroundSystem?.resetBackground()

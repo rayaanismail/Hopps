@@ -31,8 +31,7 @@ extension GameScene {
             firstBody.velocity = CGVectorMake(0, 1)
             firstBody.applyImpulse(CGVector(dx: 0, dy: getJumpVelocity()))
             hapticSystem?.triggerPlatformImpact(at: secondBody.node?.position ?? CGPoint.zero)
-            
-            
+            soundSystem?.cloudImpact(type: .stationary)
         }
         
         // enemy collision: restart game

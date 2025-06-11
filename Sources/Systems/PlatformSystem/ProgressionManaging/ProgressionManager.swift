@@ -16,6 +16,7 @@ struct ProgressionStage {
     /// Set style and distribution for different platform types
     var platformDistribution: [(style: PlatformStyle, weight: Int)]
     var textures: [String] = ["WPlatform1"]
+    var ambience: String = ""
     /// The gravity factor, a default of one, to represent 1 * 9.81.
     var gravity: CGFloat = 1
     var randomTexture: String {
@@ -54,11 +55,11 @@ struct ProgressionManager {
     
     /// Initial Stage 0-25k (5% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)], textures: ["GrassPlatform01", "GrassPlatform02"], gravity: 0.9)
+    let stageOne = ProgressionStage(range: -300..<25000, distanceMultiplier: 1, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 80), (style: .moving, weight: 20)], textures: ["GrassPlatform01", "GrassPlatform02"], ambience: "TreeAmbience", gravity: 0.9)
     
     /// Second Stage 25k-50k (30% Moving Platforms)
     /// Normal Distribution and Modifiers
-    let stageTwo = ProgressionStage(range: 25000..<101000, distanceMultiplier: 2, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)], textures: ["CloudPlatform01"], gravity: 0.75)
+    let stageTwo = ProgressionStage(range: 25000..<101000, distanceMultiplier: 2, jumpHeightMultiplier: 1.5, platformDistribution: [(style: .stationary, weight: 70), (style: .moving, weight: 30)], textures: ["CloudPlatform01"], ambience: "CloudAmbience", gravity: 0.75)
     
     /// Third Stage 50k-75k (50% Moving Platforms)
     /// 25% Distribution Increase, 20% Jump Height Increase

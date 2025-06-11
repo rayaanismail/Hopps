@@ -71,7 +71,7 @@ struct GameOverlay: View {
     func setPauseState(_ input: Bool) {
         gameState.isPaused = input
         scene.isPaused = input
-        scene.soundSystem?.pausePersistentAudio(true)
+        scene.soundSystem?.pausePersistentAudio(input)
     }
     
     func getAltitude() -> CGFloat {
