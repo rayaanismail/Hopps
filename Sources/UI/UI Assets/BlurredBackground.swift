@@ -1,4 +1,3 @@
-//
 //  BlurredBackground.swift
 //  HoppsTestScene
 //
@@ -7,14 +6,19 @@
 
 import SwiftUI
 
-/// A blurred image of the default game background
+/// A blurred image of the default game background with the Hopps title overlaid
 struct BlurredBackground: View {
     var body: some View {
-        Image(.uiBackground)
-            .resizable()
-            .ignoresSafeArea()
-            .scaledToFill()
-            .blur(radius: 5, opaque: true)
+        ZStack(alignment: .top) {
+            Image(.uiBackground)
+                .resizable()
+                .ignoresSafeArea()
+                .scaledToFill()
+                .blur(radius: 5, opaque: true)
+
+            // Hopps title at the top center
+           
+        }
     }
 }
 

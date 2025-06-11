@@ -31,6 +31,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		471D8BDA2DFA024200C4774E /* Exceptions for "Sources" folder in "HoppsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 6B19EE002DB1F37C00DCDCED /* HoppsTests */;
+		};
+		471D8BDB2DFA024200C4774E /* Exceptions for "Sources" folder in "HoppsUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 6B19EE0A2DB1F37C00DCDCED /* HoppsUITests */;
+		};
 		6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "Hopps" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -45,6 +59,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				6BF180132DDE681D00389893 /* Exceptions for "Sources" folder in "Hopps" target */,
+				471D8BDA2DFA024200C4774E /* Exceptions for "Sources" folder in "HoppsTests" target */,
+				471D8BDB2DFA024200C4774E /* Exceptions for "Sources" folder in "HoppsUITests" target */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -393,7 +409,7 @@
 				CODE_SIGN_ENTITLEMENTS = Hopps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FR6V5NG9X5;
+				DEVELOPMENT_TEAM = 59CSPCLHJS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -408,7 +424,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rayaan.ismail.HoppsTestScenes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rayaan.ismail.HoppsTestScene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -428,7 +444,7 @@
 				CODE_SIGN_ENTITLEMENTS = Hopps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FR6V5NG9X5;
+				DEVELOPMENT_TEAM = 59CSPCLHJS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -443,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rayaan.ismail.HoppsTestScenes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rayaan.ismail.HoppsTestScene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

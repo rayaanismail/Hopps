@@ -14,7 +14,11 @@ struct MainMenuView: View {
         ZStack {
             // Background, bottom layer
             BlurredBackground()
-
+            Image(.hoppsTitle)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 300, height: 300)
+                .padding(.bottom, 400)
             GeometryReader { geo in
                 // Leaderboard and Settings Buttons
                 HStack {
@@ -40,6 +44,8 @@ struct MainMenuView: View {
                 }
                 .padding(.horizontal, 30)
                 .padding(.top, 35)
+                
+                
 
                 // Main menu buttons
                 VStack {
