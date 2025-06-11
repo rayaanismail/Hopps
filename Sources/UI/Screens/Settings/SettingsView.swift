@@ -107,7 +107,7 @@ struct SettingsView: View {
                             vm.saveSettings()
                         } label: {
                             VStack {
-                                Text("SFX")
+                                Text("Music")
                                     .font(.custom("Silom", size: 24))
                                     .foregroundStyle(.customWoodBrown)
                                     .padding(.horizontal, 10)
@@ -122,7 +122,7 @@ struct SettingsView: View {
                                                     $vm.sfxEnabled)
                                 .scaleEffect(4)
                                 Text(vm.sfxEnabled ?
-                                     "Sound On" : "Sound Off")
+                                     "Music On" : "Music Off")
                                 .padding(5)
                                 .background(.white.opacity(0.4))
                                 .foregroundStyle(.customWoodBrown)
