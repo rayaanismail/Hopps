@@ -19,6 +19,8 @@ final class ZigzagEnemy: EnemyProtocol {
     /// Distance (in points) the enemy moves per zig or zag.
     let zigzagDistance: CGFloat = 200
     
+    var isTracker = false
+    
     /// Initializes the enemy, sets its scale, and configures physics.
     init() {
         node.setScale(0.3)
@@ -43,6 +45,9 @@ final class ZigzagEnemy: EnemyProtocol {
     ///   - position: The world coordinates to place the enemy.
     ///   - scene: The game scene (used to compute horizontal constraints).
     func spawn(at position: CGPoint, in scene: GameScene) {
+        isTracker = Bool.random()
+        let textureName = isTracker ? "EBirdEnemy" : "RBirdEnemy"
+        node.texture = SKTexture(imageNamed: textureName)
         node.position = position
         if scene.fetchAltitude() < 101000 {
             applyAnimation(for: .gliding)
@@ -153,14 +158,18 @@ final class ZigzagEnemy: EnemyProtocol {
     }
     
     func applyAnimation(for state: ZigzagAnimationState) {
-        node.removeAllActions()
-        switch state {
-        case .gliding:
-            node.run(.repeatForever(AnimationManager.zigzagAnimation), withKey: "gliding")
-        case .floating:
-            node.run(.repeatForever(AnimationManager.alienAnimation), withKey: "floating")
+            node.removeAllActions()
+            switch state {
+            case .gliding:
+                let anim = isTracker
+                    ? AnimationManager.trackerAnimation
+                    : AnimationManager.zigzagAnimation
+                node.run(.repeatForever(anim), withKey: "gliding")
+
+            case .floating:
+                node.run(.repeatForever(AnimationManager.alienAnimation), withKey: "floating")
+            }
         }
-    }
     
     func convertToAlien() {
         node.run(.repeatForever(AnimationManager.alienAnimation), withKey: "floating")
